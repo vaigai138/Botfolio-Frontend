@@ -1,0 +1,262 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../axiosInstance';
+import { FaUserCircle, FaEdit, FaTrashAlt } from 'react-icons/fa'; // Import icons
+
+const Projects = () => {
+  const [projects, setProjects] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
+  const [verifyClientName, setVerifyClientName] = useState(''); // Changed from verifyProject
+  const [form, setForm] = useState({
+    clientName: '',
+    description: '',
+  });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  const fetchProjects = async () => {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+      const res = await axios.get('/api/projects', { headers });
+      if (Array.isArray(res.data)) {
+        setProjects(res.data);
+      }
+    } catch (err) {
+      console.error('Failed to fetch projects:', err);
+    }
+  };
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleCreateProject = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+      const res = await axios.post('/api/projects', form, { headers });
+      setProjects([res.data, ...projects]);
+      setShowModal(false);
+      setForm({ clientName: '', description: '' }); // Reset form
+    } catch (err) {
+      console.error('Failed to create project:', err);
+      alert('Failed to create project');
+    }
+  };
+
+  const handleEditProject = (project) => {
+    setEditingId(project._id);
+    setForm({
+      clientName: project.clientName || '',
+      description: project.description || '',
+    });
+  };
+
+  const handleUpdateProject = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+      const res = await axios.put(`/api/projects/${editingId}`, form, { headers });
+      setProjects(projects.map((p) => (p._id === editingId ? res.data : p)));
+      setEditingId(null);
+      setForm({ clientName: '', description: '' }); // Reset form
+    } catch (err) {
+      alert('Failed to update project');
+    }
+  };
+
+  // Changed to confirm with clientName
+  const confirmDeleteProject = async (projectId, clientNameForConfirmation) => {
+    if (verifyClientName !== clientNameForConfirmation) {
+      alert('Client name mismatch. Please type the client name exactly.');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+
+    try {
+      await axios.delete(`/api/projects/${projectId}`, { headers });
+      setProjects(projects.filter((p) => p._id !== projectId));
+      setDeleteConfirmation('');
+      setVerifyClientName(''); // Reset verification input
+    } catch (err) {
+      alert('Failed to delete project');
+    }
+  };
+
+  return (
+    <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold" style={{ color: '#1F2937' }}>Your Projects</h2>
+        <button
+          onClick={() => setShowModal(true)}
+          className="px-5 py-2 cursor-pointer"
+          style={{ backgroundColor: '#F4A100', color: '#FFFFFF', hover: { backgroundColor: '#E09000' } }}
+        >
+          + Create Project
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {projects.map((project) => (
+          <div key={project._id} className="relative border rounded-sm shadow-sm overflow-hidden w-72 h-72" style={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB' }}>
+            {editingId === project._id ? (
+              // Edit Form (simplified to clientName and description)
+              <form onSubmit={handleUpdateProject} className="p-5 space-y-3 h-full flex flex-col justify-center">
+                <input
+                  type="text"
+                  name="clientName"
+                  value={form.clientName}
+                  onChange={handleChange}
+                  placeholder="Client Name"
+                  className="w-full p-2 border focus:border-none"
+                  style={{ color: '#1F2937' }}
+                  required
+                />
+                <textarea
+                  name="description"
+                  value={form.description}
+                  onChange={handleChange}
+                  placeholder="Description (e.g., Video Editor)"
+                 className="w-full p-2 border focus:border-none"
+                  style={{ color: '#1F2937' }}
+                />
+                <div className="flex justify-end space-x-2 mt-4">
+                  <button type="submit" className="px-4 py-2 transition" style={{ backgroundColor: '#F4A100', color: '#FFFFFF', hover: { backgroundColor: '#E09000' } }}>Save</button>
+                  <button type="button" onClick={() => setEditingId(null)} className="px-4 py-2  transition" style={{ backgroundColor: '#E5E7EB', color: '#1F2937', hover: { backgroundColor: '#D1D5DB' } }}>Cancel</button>
+                </div>
+              </form>
+            ) : (
+              // Display Mode (clientName, description, icons)
+              <>
+                <div
+                  className="p-5 flex flex-col items-center justify-center text-center cursor-pointer transition duration-200 ease-in-out h-full"
+                  style={{ hover: { backgroundColor: '#F9FAFB' } }}
+                  onClick={() => navigate(`/projects/${project._id}`)}
+                >
+                  <FaUserCircle className="text-6xl mb-3" style={{ color: '#9CA3AF' }} />
+                  <h3 className="text-xl font-semibold" style={{ color: '#111827' }}>{project.clientName || 'N/A'}</h3>
+                  {project.description && (
+                    <p className="text-sm mt-1" style={{ color: '#6B7280' }}>{project.description}</p>
+                  )}
+                </div>
+                <div className="absolute top-3 right-3 flex space-x-2">
+                  <button
+                    onClick={(e) => { e.stopPropagation(); handleEditProject(project); }}
+                    className="p-2 rounded-full"
+                    style={{ color: '#F4A100', backgroundColor: '#FFFFFF', hover: { color: '#E09000' } }}
+                    title="Edit Project"
+                  >
+                    <FaEdit size={18} />
+                  </button>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setDeleteConfirmation(project._id); }}
+                    className="p-2 rounded-full"
+                    style={{ color: '#595959ff', backgroundColor: '#FFFFFF', hover: { color: '#6b6b6bff' } }}
+                    title="Delete Project"
+                  >
+                    <FaTrashAlt size={18} />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {deleteConfirmation === project._id && (
+              <div className="absolute inset-0 bg-opacity-95 flex flex-col justify-center items-center p-5 rounded-lg shadow-inner z-10" style={{ backgroundColor: '#FFFFFF' }}>
+                <p className="mb-3 text-center font-medium" style={{ color: '#1F2937' }}>Type "<strong>{project.clientName}</strong>" to confirm deletion:</p>
+                <input
+                  type="text"
+                  className="border p-2 rounded-sm w-full max-w-xs mb-3 focus:outline-none"
+                  style={{ color: '#1F2937' }}
+                  value={verifyClientName} // Changed from verifyProject
+                  onChange={(e) => setVerifyClientName(e.target.value)} // Changed from setVerifyProject
+                  placeholder="Enter client name"
+                />
+                <div className="flex space-x-3">
+                  <button
+                    onClick={() => confirmDeleteProject(project._id, project.clientName)} // Pass clientName for confirmation
+                    className="px-4 py-2 transition shadow-sm"
+                    style={{ backgroundColor: '#DC2626', color: '#FFFFFF', hover: { backgroundColor: '#B91C1C' } }}
+                  >
+                    Confirm Delete
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDeleteConfirmation('');
+                      setVerifyClientName(''); // Reset verification input
+                    }}
+                    className="px-4 py-2 transition shadow-sm"
+                    style={{ backgroundColor: '#E5E7EB', color: '#1F2937', hover: { backgroundColor: '#D1D5DB' } }}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Modal for Create Project (simplified to clientName and description) */}
+      {showModal && (
+        <div className="fixed inset-0 bg-gray-200/70 flex justify-center items-center z-50 p-4">
+          <div className="p-8 rounded-sm w-full max-w-md shadow-sm" style={{ backgroundColor: '#FFFFFF' }}>
+            <h3 className="text-2xl font-bold mb-5" style={{ color: '#1F2937' }}>Create New Project</h3>
+            <form onSubmit={handleCreateProject} className="space-y-4">
+              <input
+                type="text"
+                name="clientName"
+                placeholder="Client Name"
+                value={form.clientName}
+                onChange={handleChange}
+                required
+                className="w-full border p-3 rounded-sm  focus:outline-none"
+                style={{color: '#1F2937' }}
+              />
+              <textarea
+                name="description"
+                placeholder="Description (e.g., Video Editor)"
+                value={form.description}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-sm focus:outline-none"
+                style={{ color: '#1F2937' }}
+              />
+              <div className="flex justify-end space-x-3 mt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowModal(false)}
+                  className="px-4 py-2 shadow-md"
+                  style={{ backgroundColor: '#E5E7EB', color: '#1F2937', hover: { backgroundColor: '#D1D5DB' } }}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-4 py-2  shadow-md"
+                  style={{ backgroundColor: '#F4A100', color: '#FFFFFF', hover: { backgroundColor: '#E09000' } }}
+                >
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Projects;
