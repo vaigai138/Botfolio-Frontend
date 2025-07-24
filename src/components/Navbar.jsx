@@ -50,12 +50,32 @@ const Navbar = () => {
 
       {/* Desktop: Left menu items - Hidden on small screens */}
       <div className="hidden md:flex gap-6 items-center">
-        <Link to="/about" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+        <a
+          href="#about"
+          onClick={(e) => {
+            e.preventDefault();
+            const target = document.querySelector('#about');
+            if (target && window.lenis) {
+              window.lenis.scrollTo(target);
+            }
+          }}
+          className="text-gray-700 hover:text-[#F4A100] font-medium"
+        >
           About Us
-        </Link>
-        <Link to="/services" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+        </a>
+        <a
+          href="#services"
+          className="text-gray-700 hover:text-[#F4A100] font-medium"
+          onClick={(e) => {
+            e.preventDefault();
+            const target = document.querySelector('#services');
+            if (target && window.lenis) {
+              window.lenis.scrollTo(target);
+            }
+          }}
+        >
           Services
-        </Link>
+        </a>
         {user && (
           <>
             <Link to="/dashboard" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
