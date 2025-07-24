@@ -51,10 +51,10 @@ const Signup = () => {
   };
 
   const handleGoogleSuccess = async (credentialResponse) => {
-    // Before proceeding with Google signup, check if terms are accepted
+    // Crucial check: Before proceeding with Google signup, check if terms are accepted
     if (!termsAccepted) {
       alert('You must agree to the Terms of Service to create an account with Google.');
-      return;
+      return; // Stop the process if terms are not accepted
     }
 
     try {
@@ -64,11 +64,14 @@ const Signup = () => {
       });
 
       if (res.data.newUser) {
-        alert('Please complete your profile by choosing a username.');
+        // This user is new via Google. They need to set a username and a password.
+        alert('Please complete your profile by choosing a username and setting a password.');
         localStorage.setItem('googleSignupToken', credentialResponse.credential);
         localStorage.setItem('googleUserData', JSON.stringify(res.data.user));
+        // The /complete-google-signup route should now handle collecting username and requiring password
         navigate('/complete-google-signup');
       } else {
+        // Existing user, log them in directly.
         loginUser(res.data.user, res.data.token);
       }
     } catch (err) {
@@ -84,7 +87,7 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-xl">
+      <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">
           Sign Up for <span className="text-[#F4A100] pacifico-regular">Botfolio</span>
         </h2>
@@ -175,11 +178,10 @@ const Signup = () => {
             </label>
           </div>
 
-
           <button
             type="submit"
             className={`w-full p-3 text-white font-semibold rounded transition ${
-              termsAccepted ? 'bg-[#F4A100] hover:opacity-90' : 'bg-yellow-200  cursor-not-allowed'
+              termsAccepted ? 'bg-[#F4A100] hover:opacity-90' : 'bg-yellow-200 cursor-not-allowed'
             }`}
             disabled={!termsAccepted} // Disable button if terms not accepted
           >
@@ -200,7 +202,7 @@ const Signup = () => {
             onError={handleGoogleError}
             width="100%"
             // The Google button itself cannot be directly disabled based on `termsAccepted`
-            // But we add the check in handleGoogleSuccess
+            // But we add the check in handleGoogleSuccess, which is the key.
           />
         </div>
 

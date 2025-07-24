@@ -32,7 +32,7 @@ const AddProjectModal = ({ onCreated }) => {
         onClick={() => setIsOpen(!isOpen)}
         className="bg-[#F4A100] text-white px-4 py-2 rounded hover:opacity-90 transition"
       >
-        {isOpen ? 'Cancel' : '➕ Add New Project'}
+        {isOpen ? 'Cancel' : '+ Add New Project'}
       </button>
 
       {isOpen && (

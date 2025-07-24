@@ -57,7 +57,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen p-2 flex items-center justify-center bg-white">
-      <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-xl">
+      <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">
           Login to <span className="text-[#F4A100] pacifico-regular">Botfolio</span>
         </h2>
