@@ -34,7 +34,7 @@ const About = () => {
   const yParallax = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
-    <section ref={ref} className="relative bg-white py-24 overflow-hidden">
+    <section ref={ref} id="about"className="relative bg-white py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:flex lg:items-start lg:gap-20">
         {/* Left Content */}
         <motion.article
@@ -52,6 +52,13 @@ const About = () => {
           </p>
           <a
             href="#showreel"
+            onClick={(e) => {
+            e.preventDefault();
+            const target = document.querySelector('#showreel');
+            if (target && window.lenis) {
+              window.lenis.scrollTo(target);
+            }
+          }}
             className="inline-block px-6 py-3 text-white bg-[#F4A100] hover:opacity-90 transition duration-300"
           >
             See Our Story

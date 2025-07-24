@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Column 1: Botfolio Branding & Description */}
           <div className="w-full lg:w-2/5 px-0 lg:px-6"> {/* Adjusted padding for consistency */}
             <div className="px-0"> {/* Inner padding removed as parent handles it */}
-              <Link to="/" className="text-3xl font-bold pacifico-regular" style={{ color: '#F4A100' }}>  
+              <Link to="/" className="text-3xl font-bold pacifico-regular" style={{ color: '#F4A100' }}>
                 Botfolio
               </Link>
 
@@ -39,14 +39,32 @@ const Footer = () => {
                 <h3 className="text-base font-semibold mb-3 uppercase" style={{ color: '#FFFFFF' }}>Company</h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/about" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>
+                    <a href="#about"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const target = document.querySelector('#about');
+                        if (target && window.lenis) {
+                          window.lenis.scrollTo(target);
+                        }
+                      }}
+                      className="block text-sm hover:text-[#F4A100] transition-colors"
+                      style={{ color: '#9CA3AF' }}>
                       About Us
-                    </Link>
+                    </a>
                   </li>
                   <li>
-                    <Link to="/services" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>
+                    <a href="#services"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const target = document.querySelector('#services');
+                        if (target && window.lenis) {
+                          window.lenis.scrollTo(target);
+                        }
+                      }}
+                      className="block text-sm hover:text-[#F4A100] transition-colors"
+                      style={{ color: '#9CA3AF' }}>
                       Services
-                    </Link>
+                    </a>
                   </li>
                   <li>
                     <Link to="/contact" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>

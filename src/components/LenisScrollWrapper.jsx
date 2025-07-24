@@ -5,7 +5,7 @@ import Lenis from '@studio-freight/lenis';
 const LenisScrollWrapper = ({ children }) => {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 6,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom easing
       direction: 'vertical', // vertical, horizontal
       gestureDirection: 'vertical', // vertical, horizontal, both
@@ -15,6 +15,8 @@ const LenisScrollWrapper = ({ children }) => {
       touchMultiplier: 2,
       infinite: false,
     });
+
+    window.lenis = lenis;
 
     function raf(time) {
       lenis.raf(time);

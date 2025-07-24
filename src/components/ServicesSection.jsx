@@ -181,6 +181,7 @@ const ServicesSection = () => {
       ref={sectionRef}
       className="relative bg-white text-black overflow-hidden"
       style={{ minHeight: '110vh' }}
+      id="services"
     >
       <div className="container mx-auto px-6 max-w-7xl pt-8 pb-12 relative z-20">
         <h2 className="services-headline text-4xl md:text-6xl font-extrabold text-center mb-12 md:mb-24">

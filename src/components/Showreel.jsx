@@ -15,7 +15,7 @@ const Showreel = () => {
   const y = useTransform(scrollYProgress, [0, 1], ['0px', '100px']);
 
   return (
-    <section ref={ref} className="bg-white py-20 px-6 sm:px-10 lg:px-20 font-sans overflow-hidden">
+    <section ref={ref} id='showreel' className="bg-white py-20 px-6 sm:px-10 lg:px-20 font-sans overflow-hidden">
       <div className="max-w-6xl mx-auto text-center">
         
         
