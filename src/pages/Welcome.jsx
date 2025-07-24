@@ -78,6 +78,7 @@ const Welcome = () => {
         <About />
         <ServicesSection/>
         <HowItWorks/>
+
        <FAQ/>
       </div>
     </LenisScrollWrapper>
