@@ -10,25 +10,26 @@ import {
 const steps = [
   {
     icon: <PiLightbulbFilamentFill size={36} className="text-[#FACC15]" />,
-    title: "Understand",
-    description: "We listen to your needs and clarify project goals.",
+    title: "Ideate",
+    description: "We dive into your needs and understand your workflow, goals, and creative challenges.",
   },
   {
     icon: <PiGearSixFill size={36} className="text-[#FACC15]" />,
-    title: "Build",
-    description: "We design and develop with modern, efficient tools.",
+    title: "Craft",
+    description: "We design a seamless, user-friendly system tailored to creative professionals like you.",
   },
   {
     icon: <PiGraphFill size={36} className="text-[#FACC15]" />,
-    title: "Optimize",
-    description: "We refine, test, and ensure everything runs smoothly.",
+    title: "Fine-Tune",
+    description: "Through testing and real feedback, we refine the features to fit your daily hustle.",
   },
   {
     icon: <PiRocketLaunchFill size={36} className="text-[#FACC15]" />,
-    title: "Launch",
-    description: "We deploy and deliver your product to the world.",
+    title: "Empower",
+    description: "With everything optimized, you're ready to manage, deliver, and scale your creative work faster.",
   },
 ];
+
 
 const HowItWorks = () => {
   return (

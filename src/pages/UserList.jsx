@@ -50,8 +50,11 @@ const UserList = () => {
   }
 
   return (
+
     <LenisScrollWrapper>
-    <div className="p-6" style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
+
+    <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
+
       <h1 className="text-3xl font-bold mb-8 text-center" style={{ color: '#1F2937' }}>
         Explore Freelancer Profiles
       </h1>

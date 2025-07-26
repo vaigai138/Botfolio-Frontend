@@ -7,22 +7,22 @@ const cardData = [
   {
     icon: <PiRocketLaunch size={36} />,
     title: "Our Vision",
-    text: "Empowering creatives with tools that support and elevate their process—not slow them down.",
+    text: "To revolutionize how freelancers and creative professionals manage their work—from pitch to payment—all in one beautiful space.",
   },
   {
     icon: <PiUsers size={36} />,
     title: "Who We Are",
-    text: "A lean crew of makers, thinkers, and doers with a passion for design and meaningful tech.",
+    text: "A passionate team of developers, designers, and creatives building tools for fellow freelancers to thrive in the digital world.",
   },
   {
     icon: <PiLightbulb size={36} />,
     title: "Our Approach",
-    text: "Design-first. User-focused. Tech-driven. Fast iterations, faster learning.",
+    text: "Intuitive design meets powerful functionality. Every feature in Botfolio is crafted with real creators in mind.",
   },
   {
     icon: <PiCheckCircle size={36} />,
     title: "Why Botfolio",
-    text: "Because client management shouldn't feel like work. We make it seamless, elegant, and fast.",
+    text: "Because managing clients, projects, and invoices shouldn't be a headache. Botfolio simplifies it all with a clean and user-first experience.",
   },
 ];
 
@@ -34,7 +34,7 @@ const About = () => {
   const yParallax = useTransform(scrollYProgress, [0, 1], [60, -60]);
 
   return (
-    <section ref={ref} id="about"className="relative bg-white py-24 overflow-hidden">
+    <section ref={ref} id="about" className="relative bg-white py-24 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:flex lg:items-start lg:gap-20">
         {/* Left Content */}
         <motion.article
@@ -48,17 +48,17 @@ const About = () => {
             Welcome to <span className="text-[#F4A100] pacifico-regular">Botfolio</span>
           </h2>
           <p className="text-gray-700 text-lg leading-relaxed mb-8">
-            We’re crafting the ultimate digital workspace for creatives—unifying onboarding, collaboration, and delivery into a seamless flow.
+            Botfolio is your creative command center — manage projects, showcase portfolios, track invoices, and collaborate effortlessly. All in one place, built just for you.
           </p>
           <a
             href="#showreel"
             onClick={(e) => {
-            e.preventDefault();
-            const target = document.querySelector('#showreel');
-            if (target && window.lenis) {
-              window.lenis.scrollTo(target);
-            }
-          }}
+              e.preventDefault();
+              const target = document.querySelector('#showreel');
+              if (target && window.lenis) {
+                window.lenis.scrollTo(target);
+              }
+            }}
             className="inline-block px-6 py-3 text-white bg-[#F4A100] hover:opacity-90 transition duration-300"
           >
             See Our Story
