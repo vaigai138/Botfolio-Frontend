@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axiosInstance from '../../axiosInstance';
 import { useAuth } from '../../context/AuthContext';
 import { Eye, EyeOff } from 'lucide-react'; // Assuming you have lucide-react for icons
+import LenisScrollWrapper from '../../components/LenisScrollWrapper';
 
 const CompleteGoogleSignup = () => {
   const [username, setUsername] = useState('');
@@ -120,6 +121,7 @@ const CompleteGoogleSignup = () => {
   }
 
   return (
+    <LenisScrollWrapper>
     <div className="min-h-screen flex items-center justify-center bg-white p-4">
       <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-xl">
         <h2 className="text-2xl font-bold mb-6 text-center">
@@ -221,6 +223,7 @@ const CompleteGoogleSignup = () => {
         </form>
       </div>
     </div>
+    </LenisScrollWrapper>
   );
 };
 

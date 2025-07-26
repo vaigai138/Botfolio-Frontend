@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import axiosInstance from '../../axiosInstance';
 import { useAuth } from '../../context/AuthContext';
 import { Trash2, Edit, Save, XCircle } from 'lucide-react'; // Example icons for actions
+import LenisScrollWrapper from '../../components/LenisScrollWrapper';
 
 const AdminDashboard = () => {
   const { user: currentUser } = useAuth();
@@ -227,6 +228,7 @@ const AdminDashboard = () => {
 
 
   return (
+    <LenisScrollWrapper>
     <div className="min-h-screen flex">
       {/* Sidebar Navigation */}
       <aside className="w-64 bg-gray-800 text-white p-6 shadow-lg">
@@ -654,6 +656,7 @@ const AdminDashboard = () => {
         )}
       </main>
     </div>
+    </LenisScrollWrapper>
   );
 };
 

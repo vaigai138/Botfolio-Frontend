@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Eye, EyeOff } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google'; // Import GoogleLogin component
 import axiosInstance from '../../axiosInstance'; // Import axiosInstance
+import LenisScrollWrapper from '../../components/LenisScrollWrapper';
 
 const Login = () => {
   const [formData, setFormData] = useState({ identifier: '', password: '' });
@@ -56,6 +57,7 @@ const Login = () => {
   };
 
   return (
+    <LenisScrollWrapper>
     <div className="min-h-screen p-2 flex items-center justify-center bg-white">
       <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">
         <h2 className="text-2xl font-bold mb-6 text-center">
@@ -123,6 +125,7 @@ const Login = () => {
         </p>
       </div>
     </div>
+    </LenisScrollWrapper>
   );
 };
 
