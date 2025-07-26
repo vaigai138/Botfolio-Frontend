@@ -4,35 +4,36 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const faqData = [
   {
     id: 1,
-    question: "What is Botfolio, and who is it for?",
-    answer: "Botfolio is an all-in-one platform designed for creative professionals like web developers, graphic designers, videographers, and agencies. It helps manage clients, projects, payments, and showcases your work efficiently.",
+    question: "What exactly is Botfolio?",
+    answer: "Botfolio is your all-in-one digital command center built for creatives — from video editors and designers to freelancers and small agencies. Manage projects, track payments, collaborate with clients, and build your portfolio — all in one place.",
   },
   {
     id: 2,
-    question: "How does Botfolio help with client management?",
-    answer: "Botfolio offers intuitive dashboards for client onboarding, streamlined communication tools, and robust project tracking features to keep you organized and your clients informed every step of the way.",
+    question: "Who can use Botfolio?",
+    answer: "If you're a creative freelancer, video editor, graphic designer, web developer, or run a small creative agency — Botfolio is built with your workflow in mind.",
   },
   {
     id: 3,
-    question: "Can I manage payments and invoices through Botfolio?",
-    answer: "Absolutely! Botfolio includes integrated tools for automating invoices, tracking payment statuses, and generating financial reports, simplifying your billing process.",
+    question: "How does Botfolio simplify client and project management?",
+    answer: "With smart dashboards, task boards, and client timelines, Botfolio lets you onboard clients, manage feedback, assign tasks, and stay on top of deadlines — all without switching tabs.",
   },
   {
     id: 4,
-    question: "Is there a way to showcase my portfolio on Botfolio?",
-    answer: "Yes, Botfolio allows you to craft stunning online portfolios with integrated media management, making it easy to display your video, web, and design projects professionally.",
+    question: "Can I handle payments and invoices inside Botfolio?",
+    answer: "Yes! You can generate branded invoices, track payments in real-time, and view clear financial summaries. No need for separate tools — it's all integrated.",
   },
   {
     id: 5,
-    question: "What kind of support does Botfolio offer?",
-    answer: "We offer comprehensive support including detailed documentation, video tutorials, and a dedicated customer service team ready to assist you with any questions or issues you might encounter.",
+    question: "How can I showcase my work on Botfolio?",
+    answer: "Create a beautiful public portfolio with links to your best projects — whether it's YouTube videos, Behance designs, or Google Drive previews. Everything is customizable and client-ready.",
   },
   {
     id: 6,
-    question: "Is Botfolio suitable for small freelancers or larger agencies?",
-    answer: "Botfolio is scalable and designed to meet the needs of both individual freelancers and growing agencies. Its modular features can be adapted to various business sizes and workflows.",
+    question: "Is it good for freelancers just starting out?",
+    answer: "Absolutely. Whether you're just getting your first client or managing multiple projects, Botfolio scales with you. Start small, grow fast — we’ve got your back.",
   },
 ];
+
 
 // Variants for the accordion content
 const contentVariants = {

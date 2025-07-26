@@ -9,35 +9,36 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     id: "01",
-    title: "Client Management & CRM",
+    title: "Smart Client Onboarding",
     description:
-      "Streamline client onboarding, communication, and project tracking with intuitive dashboards.",
+      "Easily manage new leads, gather client details, and kickstart projects with an intuitive onboarding flow.",
   },
   {
     id: "02",
-    title: "Secure Payment Tracking",
+    title: "Automated Invoicing & Payments",
     description:
-      "Automate invoices, track payments, and manage financial reporting with integrated tools.",
+      "Send branded invoices, monitor payment status, and receive secure payments—all in one place.",
   },
   {
     id: "03",
-    title: "Project Workflow Optimization",
+    title: "Streamlined Project Management",
     description:
-      "Organize tasks, set milestones, and collaborate efficiently with built-in project management features.",
+      "Break down projects into tasks, set deadlines, and track progress with a clean, Kanban-inspired workflow.",
   },
   {
     id: "04",
-    title: "Showcase & Portfolio Building",
+    title: "Personalized Public Portfolio",
     description:
-      "Craft stunning online portfolios with integrated media management for video and web projects.",
+      "Showcase your best work with a customizable public profile—perfect for attracting new clients.",
   },
   {
     id: "05",
-    title: "Feedback & Revision Cycles",
+    title: "Collaborative Feedback System",
     description:
-      "Simplify client feedback with annotation tools and revision tracking for faster project completion.",
+      "Receive client comments, share preview links, and manage revision requests without the chaos.",
   },
 ];
+
 
 // Desktop base values
 const CARD_WIDTH_DESKTOP = 350;

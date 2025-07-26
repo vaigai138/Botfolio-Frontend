@@ -2,12 +2,13 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 const featuredShowreelItem = {
-  title: 'Pioneering AI-Driven Design Solutions',
-  thumbnail: 'https://via.placeholder.com/1000x600/F4A100/FFFFFF?text=Featured+Project',
+  title: 'Empowering Freelancers Seamlessly',
+  thumbnail: 'https://dummyimage.com/1000x600/F4A100/ffffff&text=Botfolio+Showcase',
   description:
-    'Redefining user experience through intelligent automation and intuitive design.',
+    'Streamline your freelance journey — from client onboarding to final delivery — all in one beautifully designed workspace.',
   link: '#featured-case-study',
 };
+
 
 const Showreel = () => {
   const ref = useRef(null);
@@ -26,9 +27,9 @@ const Showreel = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="text-4xl sm:text-5xl font-bold leading-tight text-gray-900 mb-4"
+          className="text-4xl sm:text-5xl font-bold text-[#F4A100]  leading-tight  mb-4 "
         >
-          Featured Work: <span className="text-[#F4A100]">{featuredShowreelItem.title}</span>
+          <span className='pacifico-regular'>Botfolio</span> <span className="text-gray-900 ">{featuredShowreelItem.title}</span>
         </motion.h2>
 
         {/* 📄 Description */}
@@ -44,8 +45,8 @@ const Showreel = () => {
 
         {/* 🟠 CTA Button */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
-          className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold  shadow-md hover:shadow-lg transition"
+          whileHover={{ scale: 1.00 }}
+          className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold  shadow-md hover:shadow-sm cursor-pointer"
         >
           Find Your Subscription
         </motion.button>
