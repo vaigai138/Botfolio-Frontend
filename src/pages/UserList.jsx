@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance'; // Assuming axiosInstance is configured for your API base URL
 import { FaUserCircle, FaBriefcase } from 'react-icons/fa'; // Icons for profile and portfolio type
+import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -49,6 +50,7 @@ const UserList = () => {
   }
 
   return (
+    <LenisScrollWrapper>
     <div className="p-6" style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
       <h1 className="text-3xl font-bold mb-8 text-center" style={{ color: '#1F2937' }}>
         Explore Freelancer Profiles
@@ -93,6 +95,7 @@ const UserList = () => {
         </div>
       )}
     </div>
+    </LenisScrollWrapper>
   );
 };
 

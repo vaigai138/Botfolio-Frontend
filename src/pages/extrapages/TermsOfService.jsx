@@ -1,7 +1,9 @@
 import React from "react";
+import LenisScrollWrapper from "../../components/LenisScrollWrapper";
 
 const TermsOfService = () => {
   return (
+    <LenisScrollWrapper>
     <div className="min-h-screen bg-white text-black px-6 py-12">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-6 text-center">
@@ -84,6 +86,7 @@ const TermsOfService = () => {
         </p>
       </div>
     </div>
+    </LenisScrollWrapper>
   );
 };
 

@@ -1,11 +1,13 @@
 // frontend/src/components/Pricing.jsx
 import axios from 'axios';
+import API from '../utils/api';
+import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const Pricing = () => {
   const handleBuyNow = async () => {
     try {
       const amount = 49900; // ₹499 in paise
-      const { data } = await axios.post('http://localhost:5000/api/payment/create-order', { amount });
+      const { data } = await API.post('/payment/create-order', { amount });
 
       const options = {
         key: 'rzp_test_pTjuwIPtsBigfh',
@@ -38,10 +40,12 @@ const Pricing = () => {
   };
 
   return (
+    <LenisScrollWrapper>
     <div>
       <h2>Premium Plan - ₹499</h2>
       <button onClick={handleBuyNow}>Buy Now</button>
     </div>
+    </LenisScrollWrapper>
   );
 };
 

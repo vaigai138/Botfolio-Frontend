@@ -1,6 +1,8 @@
 import { FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import API from "../utils/api";
+import LenisScrollWrapper from "../components/LenisScrollWrapper";
 
 const Button = ({ children, className = '', ...props }) => (
   <button
@@ -66,15 +68,10 @@ export default function PricingPage() {
       const yourUserToken = localStorage.getItem("token");
 
       // Step 1: Create order
-      const { data } = await axios.post(
-        'http://localhost:5000/api/payment/create-order',
-        { amount, planName: planId }, // Use planId for planName in backend
-        {
-          headers: {
-            Authorization: `Bearer ${yourUserToken}`
-          }
-        }
-      );
+      const { data } = await API.post('/payment/create-order', {
+        amount,
+        planName: planId,
+      });
 
       const options = {
         key: 'rzp_test_tSckRvvl1z0eug',
@@ -86,20 +83,12 @@ export default function PricingPage() {
         handler: async function (response) {
           try {
             const token = localStorage.getItem('token');
-            const verifyRes = await axios.post(
-              'http://localhost:5000/api/payment/verify-payment',
-              {
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-                planName: planId // Use the actual planId for verification
-              },
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                }
-              }
-            );
+            const verifyRes = await API.post('/payment/verify-payment', {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              planName: planId,
+            });
 
             alert("✅ Payment successful! Plan activated.");
             // Re-fetch user plan after successful payment
@@ -138,11 +127,7 @@ export default function PricingPage() {
   const fetchUserPlan = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/users/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
+      const res = await API.get('/users/me');
 
       const userPlan = res.data.plan;
       let isExpired = false;
@@ -179,6 +164,7 @@ export default function PricingPage() {
   }, []);
 
   return (
+    <LenisScrollWrapper>
     <div className="min-h-screen bg-white text-black p-6 md:p-12 relative overflow-hidden">
       {/* 🎨 Background illustration */}
       <img
@@ -201,11 +187,10 @@ export default function PricingPage() {
         {plans.map((plan, idx) => (
           <div
             key={idx}
-            className={`border p-6 rounded-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-md bg-white/80 ${
-              plan.featured
-                ? "border-[#F4A100] shadow-lg"
-                : "border-gray-200"
-            }`}
+            className={`border p-6 rounded-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-md bg-white/80 ${plan.featured
+              ? "border-[#F4A100] shadow-lg"
+              : "border-gray-200"
+              }`}
           >
             <h2 className="text-2xl font-extrabold mb-1 text-gray-900">
               {plan.name}
@@ -223,11 +208,10 @@ export default function PricingPage() {
             </ul>
 
             <Button
-              className={`w-full font-semibold rounded-sm py-2 ${
-                plan.featured
-                  ? "bg-[#F4A100] text-white hover:bg-[#d68c00]"
-                  : "text-black bg-white border border-gray-300 hover:bg-gray-50"
-              }`}
+              className={`w-full font-semibold rounded-sm py-2 ${plan.featured
+                ? "bg-[#F4A100] text-white hover:bg-[#d68c00]"
+                : "text-black bg-white border border-gray-300 hover:bg-gray-50"
+                }`}
               disabled={
                 // Disable if the current plan is active AND this is a different plan OR if it's a paid plan and the current active plan is 'basic' (free)
                 (!planExpired && currentPlan === plan.planId) || // Already active on this plan
@@ -238,7 +222,7 @@ export default function PricingPage() {
                   alert(`😎 You're already on the ${plan.name} plan!`);
                   return;
                 }
-                
+
                 if (plan.amount > 0) {
                   handlePayment(plan.amount, plan.planId);
                 } else {
@@ -258,12 +242,13 @@ export default function PricingPage() {
               {currentPlan === plan.planId && !planExpired
                 ? "Active Plan"
                 : (currentPlan === plan.planId && planExpired)
-                ? "Renew Plan"
-                : plan.buttonText}
+                  ? "Renew Plan"
+                  : plan.buttonText}
             </Button>
           </div>
         ))}
       </div>
     </div>
+    </LenisScrollWrapper>
   );
 }
