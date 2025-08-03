@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'botfolio-backend-production.up.railway.app',
+  baseURL: 'https://botfolio-backend-production.up.railway.app',
 });
 
 // Optional: attach token automatically

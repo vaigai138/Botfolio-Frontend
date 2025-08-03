@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'botfolio-backend-production.up.railway.app/api',
+  baseURL: 'https://botfolio-backend-production.up.railway.app/api',
 });
 
 // Add token to each request
