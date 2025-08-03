@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://botfolio-backend.onrender.com/api',
+  baseURL: 'botfolio-backend-production.up.railway.app/api',
 });
 
 // Add token to each request
