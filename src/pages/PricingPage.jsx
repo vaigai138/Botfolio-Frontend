@@ -74,7 +74,7 @@ export default function PricingPage() {
       });
 
       const options = {
-        key: 'rzp_test_tSckRvvl1z0eug',
+        key: 'rzp_live_lu6H4dUtnyH0J1',
         amount: data.order.amount,
         currency: 'INR',
         name: 'Botfolio',
