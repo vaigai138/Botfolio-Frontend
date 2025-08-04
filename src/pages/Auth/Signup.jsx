@@ -59,7 +59,7 @@ const Signup = () => {
     }
 
     try {
-      console.log('Google signup success:', credentialResponse);
+      //console.log('Google signup success:', credentialResponse);
       const res = await axiosInstance.post('/api/users/auth/google', {
         token: credentialResponse.credential,
       });
@@ -82,7 +82,7 @@ const Signup = () => {
   };
 
   const handleGoogleError = () => {
-    console.log('Google Signup Failed');
+    //console.log('Google Signup Failed');
     alert('Google signup failed. Please try again.');
   };
 
