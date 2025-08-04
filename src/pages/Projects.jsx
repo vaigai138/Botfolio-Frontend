@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance';
 import { FaUserCircle, FaEdit, FaTrashAlt } from 'react-icons/fa'; // Import icons
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const Projects = () => {
   const [projects, setProjects] = useState([]);
@@ -98,7 +98,7 @@ const Projects = () => {
   };
 
   return (
-    <LenisScrollWrapper>
+  //  <LenisScrollWrapper>
     <div className="p-4 sm:p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0" style={{ color: '#1F2937' }}>Your Projects</h2>
@@ -255,7 +255,7 @@ const Projects = () => {
         </div>
       )}
     </div>
-    </LenisScrollWrapper>
+   // </LenisScrollWrapper>
   );
 };
 
