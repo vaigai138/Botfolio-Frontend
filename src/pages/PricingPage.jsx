@@ -215,7 +215,7 @@ export default function PricingPage() {
   }
 
   return (
-    <LenisScrollWrapper>
+   // <LenisScrollWrapper>
       <div className="min-h-screen bg-white text-black p-6 md:p-12 relative overflow-hidden">
         {/* 🎨 Background illustration */}
         <img
