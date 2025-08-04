@@ -17,7 +17,7 @@ import {
   FaLink, // For links allowed
   FaPaintBrush // For design limit
 } from 'react-icons/fa';
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const Dashboard = () => {
   const [userProfile, setUserProfile] = useState(null);
@@ -117,7 +117,7 @@ const Dashboard = () => {
                              (userProfile?.graphicImages?.length || 0);
 
   return (
-    <LenisScrollWrapper>
+    //<LenisScrollWrapper>
     <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b" style={{ borderColor: '#E5E7EB' }}>
         <div className="flex items-center mb-4 sm:mb-0">
@@ -333,7 +333,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
-    </LenisScrollWrapper>
+   // </LenisScrollWrapper>
   );
 };
 
