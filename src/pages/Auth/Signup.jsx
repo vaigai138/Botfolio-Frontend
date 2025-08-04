@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import { Eye, EyeOff } from 'lucide-react';
 import { GoogleLogin } from '@react-oauth/google';
 import axiosInstance from '../../axiosInstance';
-import LenisScrollWrapper from '../../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../../components/LenisScrollWrapper';
 import { FaCheck, FaTimesCircle } from 'react-icons/fa';
 
 // A custom message component to replace browser alerts
@@ -114,7 +114,7 @@ const Signup = () => {
 
   return (
     <>
-      <LenisScrollWrapper>
+    //  <LenisScrollWrapper>
         <div className="min-h-screen flex items-center justify-center bg-white">
           <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">
             <h2 className="text-2xl font-bold mb-6 text-center">
@@ -252,7 +252,7 @@ const Signup = () => {
             </p>
           </div>
         </div>
-      </LenisScrollWrapper>
+    //  </LenisScrollWrapper>
       <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
     </>
   );
