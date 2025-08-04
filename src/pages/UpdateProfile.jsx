@@ -3,7 +3,7 @@ import axios from '../axiosInstance';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { FaUserCircle, FaTrashAlt } from 'react-icons/fa';
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const UpdateProfile = () => {
   const { token } = useAuth();
@@ -255,7 +255,7 @@ const UpdateProfile = () => {
   };
 
   return (
-    <LenisScrollWrapper>
+   // <LenisScrollWrapper>
     <div className="max-w-5xl mx-auto mt-10 p-8 bg-white shadow-xl border border-gray-200">
 
       {planExpired && (
@@ -435,7 +435,7 @@ const UpdateProfile = () => {
         </button>
       </form>
     </div>
-    </LenisScrollWrapper>
+  //  </LenisScrollWrapper>
   );
 };
 
