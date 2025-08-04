@@ -53,8 +53,8 @@ const plans = [
   },
   {
     name: "Standard",
-    price: "₹10/mo",
-    amount: 1000,
+    price: "₹25/mo",
+    amount: 2500,
     description: "For growing creators",
     features: [
       "Up to 10 portfolio links",
@@ -67,8 +67,8 @@ const plans = [
   },
   {
     name: "Premium",
-    price: "₹25/mo",
-    amount: 2500,
+    price: "₹50/mo",
+    amount: 5000,
     description: "Maximize your visibility",
     features: [
       "Up to 25 portfolio links",
