@@ -28,7 +28,7 @@ const Login = () => {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     try {
-      console.log('Google login success:', credentialResponse);
+      //console.log('Google login success:', credentialResponse);
       const res = await axiosInstance.post('/api/users/auth/google', {
         token: credentialResponse.credential, // Send the ID token to your backend
       });
@@ -52,7 +52,7 @@ const Login = () => {
   };
 
   const handleGoogleError = () => {
-    console.log('Google Login Failed');
+   // console.log('Google Login Failed');
     alert('Google login failed. Please try again.');
   };
 
