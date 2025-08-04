@@ -104,6 +104,9 @@ const Navbar = () => {
                         <Link to="/projects" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
                             Projects
                         </Link>
+                        <Link to="/pricing" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+                            Pricing
+                        </Link>
                         {user.role === 'admin' && (
                             <Link to="/admin/dashboard" className="text-red-600 font-bold hover:text-red-800" onClick={handleNavLinkClick}>
                                 Admin
@@ -206,6 +209,9 @@ const Navbar = () => {
                             </Link>
                             <Link to="/projects" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 Projects
+                            </Link>
+                            <Link to="/pricing" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
+                                Pricing
                             </Link>
                             {user.role === 'admin' && (
                                 <Link to="/admin/dashboard" className="text-red-500 text-xl font-bold hover:text-yellow-300" onClick={handleNavLinkClick}>
