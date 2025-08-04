@@ -9,7 +9,7 @@ import {
     FaPen
 } from 'react-icons/fa';
 import { HiOutlinePhotograph } from 'react-icons/hi';
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const PublicProfile = () => {
     const { username } = useParams();
@@ -119,7 +119,7 @@ const limitedImages = planExpired ? profile.graphicImages.slice(0, 5) : profile.
 
 
     return (
-        <LenisScrollWrapper>
+        //<LenisScrollWrapper>
         <div className="min-h-screen p-6 max-w-6xl mx-auto" >
             <h1 className="text-3xl font-bold mb-8 text-center">
                 Welcome to {profile.name}'s Portfolio
@@ -311,7 +311,7 @@ const limitedImages = planExpired ? profile.graphicImages.slice(0, 5) : profile.
             {/* Image Modal */}
 
         </div>
-        </LenisScrollWrapper>
+      //  </LenisScrollWrapper>
     );
 };
 
