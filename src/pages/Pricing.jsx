@@ -24,7 +24,6 @@ const Pricing = () => {
         prefill: {
           name: 'KV',
           email: 'kv@example.com',
-          contact: '9999999999',
         },
         theme: {
           color: '#F4A100',
