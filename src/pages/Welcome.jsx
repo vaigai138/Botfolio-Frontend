@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Showreel from '../components/Showreel';
 import About from '../components/About';
-import LenisScrollWrapper from '../components/LenisScrollWrapper'; // Import the LenisScrollWrapper
+//import LenisScrollWrapper from '../components/LenisScrollWrapper'; // Import the LenisScrollWrapper
 import ServicesSection from '../components/ServicesSection';
 import FAQ from '../components/FAQ';
 import HowItWorks from '../components/HowItWorks';
@@ -15,7 +15,7 @@ const Welcome = () => {
 
   return (
     // Wrap the entire content that needs smooth scrolling with LenisScrollWrapper
-    <LenisScrollWrapper>
+    //<LenisScrollWrapper>
       <div className="bg-white">
         {/* 🌟 Hero Section */}
         <div className="relative mt-10 flex items-center justify-center p-8 overflow-hidden">
@@ -81,7 +81,7 @@ const Welcome = () => {
 
        <FAQ/>
       </div>
-    </LenisScrollWrapper>
+    //</LenisScrollWrapper>
   );
 };
 
