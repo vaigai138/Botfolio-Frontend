@@ -3,7 +3,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 // Assuming this API utility is correctly configured
 import API from "../utils/api";
-import LenisScrollWrapper from "../components/LenisScrollWrapper";
+//import LenisScrollWrapper from "../components/LenisScrollWrapper";
 import { FaTimesCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
 
@@ -301,6 +301,6 @@ export default function PricingPage() {
         )}
         <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
       </div>
-    </LenisScrollWrapper>
+   // </LenisScrollWrapper>
   );
 }
