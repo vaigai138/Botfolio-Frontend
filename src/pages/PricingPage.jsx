@@ -5,6 +5,10 @@ import { useState, useEffect } from "react";
 import API from "../utils/api";
 import LenisScrollWrapper from "../components/LenisScrollWrapper";
 import { FaTimesCircle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+
+// Access the Razorpay key from environment variables
+const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
 // A custom message component to replace browser alerts
 const MessageComponent = ({ message, type, onClose }) => {
@@ -82,7 +86,10 @@ export default function PricingPage() {
   const [planExpired, setPlanExpired] = useState(false);
   const [activePlanName, setActivePlanName] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [loadingPlanId, setLoadingPlanId] = useState(null);
+  const [loggedInUser, setLoggedInUser] = useState(null);
   const [message, setMessage] = useState({ text: null, type: null });
+  const navigate = useNavigate();
 
   // Function to show a message and clear it after a delay
   const showMessage = (text, type = 'success', duration = 5000) => {
@@ -91,17 +98,15 @@ export default function PricingPage() {
   };
 
   const handlePayment = async (amount, planId) => {
+    setLoadingPlanId(planId); // Start loading animation for the clicked button
     try {
-      const yourUserToken = localStorage.getItem("token");
-
-      // Step 1: Create order
       const { data } = await API.post('/payment/create-order', {
         amount,
         planName: planId,
       });
 
       const options = {
-        key: 'rzp_live_lu6H4dUtnyH0J1', // WARNING: Hardcoding API keys is a security risk. Fetch from backend.
+        key: RAZORPAY_KEY,
         amount: data.order.amount,
         currency: 'INR',
         name: 'Botfolio',
@@ -109,8 +114,7 @@ export default function PricingPage() {
         order_id: data.order.id,
         handler: async function (response) {
           try {
-            const token = localStorage.getItem('token');
-            const verifyRes = await API.post('/payment/verify-payment', {
+            await API.post('/payment/verify-payment', {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
@@ -122,12 +126,14 @@ export default function PricingPage() {
           } catch (error) {
             console.error("Payment verification failed:", error);
             showMessage("❌ Payment verification failed.", 'error');
+          } finally {
+            setLoadingPlanId(null);
           }
         },
         prefill: {
-          name: "User Name", // Prefill with user data
-          email: "user@example.com", // Prefill with user data
-          contact: "9999999999" // Prefill with user data
+          name: loggedInUser?.name || "User Name",
+          email: loggedInUser?.email || "user@example.com",
+          contact: loggedInUser?.phone || "9999999999"
         },
         theme: {
           color: "#F4A100"
@@ -146,6 +152,8 @@ export default function PricingPage() {
     } catch (error) {
       console.error("Payment initiation failed", error);
       showMessage("Payment failed to start. Please try again.", 'error');
+    } finally {
+      setLoadingPlanId(null); // Stop loading animation regardless of success/failure
     }
   };
 
@@ -153,10 +161,11 @@ export default function PricingPage() {
   const fetchUserPlan = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem("token");
       const res = await API.get('/users/me');
+      const userData = res.data;
+      setLoggedInUser(userData);
 
-      const userPlan = res.data.plan;
+      const userPlan = userData.plan;
       let isExpired = false;
 
       if (userPlan && userPlan.purchasedAt) {
@@ -190,6 +199,20 @@ export default function PricingPage() {
   useEffect(() => {
     fetchUserPlan();
   }, []);
+
+  const getButtonText = (planId) => {
+    const plan = plans.find(p => p.planId === planId);
+    if (currentPlan === plan.planId && !planExpired) {
+      return "Active Plan";
+    }
+    if (currentPlan === plan.planId && planExpired) {
+      return "Renew Plan";
+    }
+    if (loadingPlanId === planId) {
+      return "Loading...";
+    }
+    return plan.buttonText;
+  }
 
   return (
     <LenisScrollWrapper>
@@ -242,9 +265,19 @@ export default function PricingPage() {
                   className={`w-full font-semibold rounded-sm py-2 ${plan.featured
                     ? "bg-[#F4A100] text-white hover:bg-[#d68c00]"
                     : "text-black bg-white border border-gray-300 hover:bg-gray-50"
-                    }`}
-                  disabled={currentPlan === plan.planId && !planExpired}
+                    } ${loadingPlanId === plan.planId ? 'cursor-not-allowed opacity-70' : ''}`}
+                  disabled={
+                    (currentPlan === plan.planId && !planExpired) ||
+                    loadingPlanId === plan.planId
+                  }
                   onClick={() => {
+                    // Check if user is logged in
+                    if (!loggedInUser) {
+                      showMessage("Please log in to choose a plan.", 'error');
+                      // Optional: Redirect to login page
+                      // navigate('/login');
+                      return;
+                    }
                     if (currentPlan === plan.planId && !planExpired) {
                       showMessage(`😎 You're already on the ${plan.name} plan!`);
                       return;
@@ -260,11 +293,7 @@ export default function PricingPage() {
                     }
                   }}
                 >
-                  {currentPlan === plan.planId && !planExpired
-                    ? "Active Plan"
-                    : (currentPlan === plan.planId && planExpired)
-                      ? "Renew Plan"
-                      : plan.buttonText}
+                  {getButtonText(plan.planId)}
                 </Button>
               </div>
             ))}
