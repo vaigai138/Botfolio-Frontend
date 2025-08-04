@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, Send } from "lucide-react";
-import LenisScrollWrapper from "../../components/LenisScrollWrapper";
+//import LenisScrollWrapper from "../../components/LenisScrollWrapper";
 
 const jobOpenings = [
   {
@@ -67,7 +67,7 @@ const Careers = () => {
   };
 
   return (
-    <LenisScrollWrapper>
+   // <LenisScrollWrapper>
     <div className="min-h-screen bg-white text-black px-4 py-12">
       <div className="max-w-6xl mx-auto">
         <motion.h1
@@ -187,7 +187,7 @@ const Careers = () => {
         </div>
       </div>
     </div>
-    </LenisScrollWrapper>
+   // </LenisScrollWrapper>
   );
 };
 
