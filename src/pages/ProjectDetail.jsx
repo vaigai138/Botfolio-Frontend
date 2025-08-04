@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance';
 import { FaPlus, FaTrashAlt, FaEdit, FaSearch, FaFilter, FaFilePdf } from 'react-icons/fa';
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -251,7 +251,7 @@ const ProjectDetail = () => {
 
 
   return (
-    <LenisScrollWrapper>
+    //<LenisScrollWrapper>
     <div className="p-4 sm:p-6" style={{backgroundColor: '#ffffffff', minHeight: '100vh'}}>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold" style={{color: '#1F2937'}}>Tasks for Client: {clientName || 'Loading...'}</h2>
@@ -600,7 +600,7 @@ const ProjectDetail = () => {
         </div>
       )}
     </div>
-    </LenisScrollWrapper>
+    //</LenisScrollWrapper>
   );
 };
 
