@@ -160,8 +160,8 @@ const UpdateProfile = () => {
       return;
     }
 
-    console.log('Design limit:', planLimits.shorts);
-    console.log('Current count:', designImages.length + existingDesignImages.length);
+    //console.log('Design limit:', planLimits.shorts);
+   // console.log('Current count:', designImages.length + existingDesignImages.length);
 
 
 
