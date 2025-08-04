@@ -114,7 +114,7 @@ const Signup = () => {
 
   return (
     <>
-    //  <LenisScrollWrapper>
+ 
         <div className="min-h-screen flex items-center justify-center bg-white">
           <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">
             <h2 className="text-2xl font-bold mb-6 text-center">
@@ -252,7 +252,7 @@ const Signup = () => {
             </p>
           </div>
         </div>
-    //  </LenisScrollWrapper>
+
       //<MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
     </>
   );
