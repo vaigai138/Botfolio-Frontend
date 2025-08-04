@@ -1,8 +1,27 @@
 import { FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useState, useEffect } from "react";
+// Assuming this API utility is correctly configured
 import API from "../utils/api";
 import LenisScrollWrapper from "../components/LenisScrollWrapper";
+import { FaTimesCircle } from "react-icons/fa";
+
+// A custom message component to replace browser alerts
+const MessageComponent = ({ message, type, onClose }) => {
+  if (!message) return null;
+  const bgColor = type === 'error' ? 'bg-red-500' : 'bg-green-500';
+  const icon = type === 'error' ? <FaTimesCircle className="h-6 w-6" /> : <FaCheck className="h-6 w-6" />;
+  return (
+    <div className={`fixed inset-x-0 bottom-4 mx-auto w-11/12 md:w-1/3 p-4 rounded-lg shadow-lg text-white font-bold flex items-center gap-4 z-[9999] transition-all duration-300 ${bgColor}`}>
+      {icon}
+      <span>{message}</span>
+      <button onClick={onClose} className="ml-auto text-white hover:text-gray-200">
+        <FaTimesCircle className="h-5 w-5" />
+      </button>
+    </div>
+  );
+};
+
 
 const Button = ({ children, className = '', ...props }) => (
   <button
@@ -61,7 +80,15 @@ const plans = [
 export default function PricingPage() {
   const [currentPlan, setCurrentPlan] = useState(null);
   const [planExpired, setPlanExpired] = useState(false);
-  const [activePlanName, setActivePlanName] = useState(null); // To store the name of the active/expired plan
+  const [activePlanName, setActivePlanName] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [message, setMessage] = useState({ text: null, type: null });
+
+  // Function to show a message and clear it after a delay
+  const showMessage = (text, type = 'success', duration = 5000) => {
+    setMessage({ text, type });
+    setTimeout(() => setMessage({ text: null, type: null }), duration);
+  };
 
   const handlePayment = async (amount, planId) => {
     try {
@@ -74,11 +101,11 @@ export default function PricingPage() {
       });
 
       const options = {
-        key: 'rzp_live_lu6H4dUtnyH0J1',
+        key: 'rzp_live_lu6H4dUtnyH0J1', // WARNING: Hardcoding API keys is a security risk. Fetch from backend.
         amount: data.order.amount,
         currency: 'INR',
         name: 'Botfolio',
-        description: `${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan`, // Dynamic description
+        description: `${planId.charAt(0).toUpperCase() + planId.slice(1)} Plan`,
         order_id: data.order.id,
         handler: async function (response) {
           try {
@@ -90,18 +117,17 @@ export default function PricingPage() {
               planName: planId,
             });
 
-            alert("✅ Payment successful! Plan activated.");
-            // Re-fetch user plan after successful payment
-            fetchUserPlan();
+            showMessage("✅ Payment successful! Plan activated.");
+            fetchUserPlan(); // Re-fetch user plan after successful payment
           } catch (error) {
             console.error("Payment verification failed:", error);
-            alert("❌ Payment verification failed.");
+            showMessage("❌ Payment verification failed.", 'error');
           }
         },
         prefill: {
-          name: "KV",
-          email: "kv@email.com",
-          contact: "9999999999"
+          name: "User Name", // Prefill with user data
+          email: "user@example.com", // Prefill with user data
+          contact: "9999999999" // Prefill with user data
         },
         theme: {
           color: "#F4A100"
@@ -119,12 +145,13 @@ export default function PricingPage() {
 
     } catch (error) {
       console.error("Payment initiation failed", error);
-      alert("Payment failed to start. Please try again.");
+      showMessage("Payment failed to start. Please try again.", 'error');
     }
   };
 
   // Function to fetch user plan, now callable
   const fetchUserPlan = async () => {
+    setLoading(true);
     try {
       const token = localStorage.getItem("token");
       const res = await API.get('/users/me');
@@ -144,18 +171,19 @@ export default function PricingPage() {
         setCurrentPlan(userPlan.name);
         setActivePlanName(userPlan.name);
       } else {
-        // If no plan is found, or it's implicitly 'basic', ensure it's treated as available for upgrade.
-        setCurrentPlan('basic'); // Assume 'basic' if no plan is set in backend
+        // If no plan is found, assume 'basic'
+        setCurrentPlan('basic');
         setActivePlanName('basic');
-        setPlanExpired(false); // Basic plan never "expires" for selection purposes
+        setPlanExpired(false);
       }
-
     } catch (error) {
       console.error("Failed to fetch user data", error);
-      // If fetching fails, treat as basic plan available
+      // Fallback to basic plan if API call fails
       setCurrentPlan('basic');
       setActivePlanName('basic');
       setPlanExpired(false);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -165,90 +193,85 @@ export default function PricingPage() {
 
   return (
     <LenisScrollWrapper>
-    <div className="min-h-screen bg-white text-black p-6 md:p-12 relative overflow-hidden">
-      {/* 🎨 Background illustration */}
-      <img
-        src="https://illustrations.popsy.co/gray/work-from-home.svg"
-        alt="Background Illustration"
-        className="absolute opacity-5 top-10 right-10 w-[600px] hidden md:block pointer-events-none select-none"
-      />
+      <div className="min-h-screen bg-white text-black p-6 md:p-12 relative overflow-hidden">
+        {/* 🎨 Background illustration */}
+        <img
+          src="https://illustrations.popsy.co/gray/work-from-home.svg"
+          alt="Background Illustration"
+          className="absolute opacity-5 top-10 right-10 w-[600px] hidden md:block pointer-events-none select-none"
+        />
 
-      <h1 className="text-4xl font-bold text-center mb-4 text-gray-900 drop-shadow-sm">
-        Choose Your Plan
-      </h1>
+        <h1 className="text-4xl font-bold text-center mb-4 text-gray-900 drop-shadow-sm">
+          Choose Your Plan
+        </h1>
 
-      {planExpired && activePlanName && activePlanName !== 'basic' && (
-        <div className="bg-red-100 text-yellow-800 bg-yellow-100 p-4 rounded mb-8 text-center border border-yellow-300 max-w-2xl mx-auto">
-          🚨 Your <strong>{activePlanName.charAt(0).toUpperCase() + activePlanName.slice(1)}</strong> plan has expired. Please choose another plan or Renew plan to continue enjoying full features!
-        </div>
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto z-10 relative">
-        {plans.map((plan, idx) => (
-          <div
-            key={idx}
-            className={`border p-6 rounded-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-md bg-white/80 ${plan.featured
-              ? "border-[#F4A100] shadow-lg"
-              : "border-gray-200"
-              }`}
-          >
-            <h2 className="text-2xl font-extrabold mb-1 text-gray-900">
-              {plan.name}
-            </h2>
-            <p className="text-xl font-semibold mb-2 text-gray-700">{plan.price}</p>
-            <p className="text-gray-500 mb-4 text-sm">{plan.description}</p>
-
-            <ul className="space-y-2 mb-6">
-              {plan.features.map((feature, i) => (
-                <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
-                  <FaCheck className="text-green-600" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-
-            <Button
-              className={`w-full font-semibold rounded-sm py-2 ${plan.featured
-                ? "bg-[#F4A100] text-white hover:bg-[#d68c00]"
-                : "text-black bg-white border border-gray-300 hover:bg-gray-50"
-                }`}
-              disabled={
-                // Disable if the current plan is active AND this is a different plan OR if it's a paid plan and the current active plan is 'basic' (free)
-                (!planExpired && currentPlan === plan.planId) || // Already active on this plan
-                (!planExpired && currentPlan !== plan.planId && currentPlan !== 'basic') // Active on a different, non-basic plan
-              }
-              onClick={() => {
-                if (currentPlan === plan.planId && !planExpired) {
-                  alert(`😎 You're already on the ${plan.name} plan!`);
-                  return;
-                }
-
-                if (plan.amount > 0) {
-                  handlePayment(plan.amount, plan.planId);
-                } else {
-                  // This is the 'Basic' (Free) plan
-                  if (currentPlan === 'basic' && !planExpired) {
-                    alert("🎉 You are already on the Free plan!");
-                  } else {
-                    alert("🎉 Free plan selected! You're good to go.");
-                    // In a real application, you'd likely call an API to switch the user to the basic plan
-                    setCurrentPlan(plan.planId);
-                    setActivePlanName(plan.planId);
-                    setPlanExpired(false);
-                  }
-                }
-              }}
-            >
-              {currentPlan === plan.planId && !planExpired
-                ? "Active Plan"
-                : (currentPlan === plan.planId && planExpired)
-                  ? "Renew Plan"
-                  : plan.buttonText}
-            </Button>
+        {planExpired && activePlanName && activePlanName !== 'basic' && (
+          <div className="bg-red-100 text-yellow-800 bg-yellow-100 p-4 rounded mb-8 text-center border border-yellow-300 max-w-2xl mx-auto">
+            🚨 Your <strong>{activePlanName.charAt(0).toUpperCase() + activePlanName.slice(1)}</strong> plan has expired. Please choose another plan or Renew plan to continue enjoying full features!
           </div>
-        ))}
+        )}
+
+        {loading ? (
+          <div className="text-center text-gray-500 text-lg mt-10">Loading plans...</div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto z-10 relative">
+            {plans.map((plan, idx) => (
+              <div
+                key={idx}
+                className={`border p-6 rounded-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1 backdrop-blur-md bg-white/80 ${plan.featured
+                  ? "border-[#F4A100] shadow-lg"
+                  : "border-gray-200"
+                  }`}
+              >
+                <h2 className="text-2xl font-extrabold mb-1 text-gray-900">
+                  {plan.name}
+                </h2>
+                <p className="text-xl font-semibold mb-2 text-gray-700">{plan.price}</p>
+                <p className="text-gray-500 mb-4 text-sm">{plan.description}</p>
+
+                <ul className="space-y-2 mb-6">
+                  {plan.features.map((feature, i) => (
+                    <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
+                      <FaCheck className="text-green-600" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+
+                <Button
+                  className={`w-full font-semibold rounded-sm py-2 ${plan.featured
+                    ? "bg-[#F4A100] text-white hover:bg-[#d68c00]"
+                    : "text-black bg-white border border-gray-300 hover:bg-gray-50"
+                    }`}
+                  disabled={currentPlan === plan.planId && !planExpired}
+                  onClick={() => {
+                    if (currentPlan === plan.planId && !planExpired) {
+                      showMessage(`😎 You're already on the ${plan.name} plan!`);
+                      return;
+                    }
+                    if (plan.amount > 0) {
+                      handlePayment(plan.amount, plan.planId);
+                    } else {
+                      showMessage("🎉 Free plan selected! You're good to go.");
+                      // Here you would typically call an API to switch the plan on the backend
+                      setCurrentPlan(plan.planId);
+                      setActivePlanName(plan.planId);
+                      setPlanExpired(false);
+                    }
+                  }}
+                >
+                  {currentPlan === plan.planId && !planExpired
+                    ? "Active Plan"
+                    : (currentPlan === plan.planId && planExpired)
+                      ? "Renew Plan"
+                      : plan.buttonText}
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+        <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
       </div>
-    </div>
     </LenisScrollWrapper>
   );
 }
