@@ -162,7 +162,7 @@ const Login = () => {
           </div>
         </div>
     //  </LenisScrollWrapper>
-      <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
+     // <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
     </>
   );
 };
