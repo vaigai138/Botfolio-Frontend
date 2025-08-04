@@ -1,7 +1,7 @@
 // frontend/src/components/Pricing.jsx
 import axios from 'axios';
 import API from '../utils/api';
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const Pricing = () => {
   const handleBuyNow = async () => {
@@ -40,12 +40,12 @@ const Pricing = () => {
   };
 
   return (
-    <LenisScrollWrapper>
+   // <LenisScrollWrapper>
     <div>
       <h2>Premium Plan - ₹499</h2>
       <button onClick={handleBuyNow}>Buy Now</button>
     </div>
-    </LenisScrollWrapper>
+  //  </LenisScrollWrapper>
   );
 };
 
