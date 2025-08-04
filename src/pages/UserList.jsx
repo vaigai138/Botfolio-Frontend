@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance'; // Assuming axiosInstance is configured for your API base URL
 import { FaUserCircle, FaBriefcase } from 'react-icons/fa'; // Icons for profile and portfolio type
-import LenisScrollWrapper from '../components/LenisScrollWrapper';
+//import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -51,7 +51,7 @@ const UserList = () => {
 
   return (
 
-    <LenisScrollWrapper>
+    //<LenisScrollWrapper>
 
     <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
 
@@ -98,7 +98,7 @@ const UserList = () => {
         </div>
       )}
     </div>
-    </LenisScrollWrapper>
+    //</LenisScrollWrapper>
   );
 };
 
