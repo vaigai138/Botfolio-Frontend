@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
@@ -44,12 +45,14 @@ const Showreel = () => {
         </motion.p>
 
         {/* 🟠 CTA Button */}
-        <motion.button
-          whileHover={{ scale: 1.00 }}
-          className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold  shadow-md hover:shadow-sm cursor-pointer"
-        >
-          Find Your Subscription
-        </motion.button>
+       <Link to="/pricing">
+  <motion.button
+    whileHover={{ scale: 1.00 }}
+    className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold shadow-md hover:shadow-sm cursor-pointer"
+  >
+    Find Your Subscription
+  </motion.button>
+</Link>
 
         {/* 🎥 Video/Image Preview */}
         <motion.div
