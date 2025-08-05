@@ -125,16 +125,23 @@ const UpdateProfile = () => {
   };
 
   const addField = (field) => {
-    const limit = field === 'shortsLinks' ? planLimits.shorts
-      : field === 'longsLinks' ? planLimits.longs
-        : 0;
+  let limit;
+  if (field === 'shortsLinks') {
+    limit = planLimits.shorts;
+  } else if (field === 'longsLinks') {
+    limit = planLimits.longs;
+  } else if (field === 'tags') {
+    limit = 10; // Set the limit for tags to 10
+  } else {
+    limit = 0;
+  }
 
-    if (form[field].length < limit) {
-      setForm({ ...form, [field]: [...form[field], ''] });
-    } else {
-      alert(`You've reached the limit of ${limit} for ${field}.`);
-    }
-  };
+  if (form[field].length < limit) {
+    setForm({ ...form, [field]: [...form[field], ''] });
+  } else {
+    alert(`You've reached the limit of ${limit} for ${field}.`);
+  }
+};
 
 
 
@@ -259,9 +266,9 @@ const UpdateProfile = () => {
     <div className="max-w-5xl mx-auto mt-10 p-8 bg-white shadow-xl border border-gray-200">
 
       {planExpired && (
-        <div className="bg-yellow-100 text-yellow-800 p-4 rounded mb-4 text-sm border border-yellow-300">
-          🚨 Your plan has expired. You can add links as per your plan, but only <b>5 videos and images</b> will be visible. Upgrade to <b>Pro</b> to unlock all features!
-        </div>
+       <div className="bg-yellow-100 text-yellow-800 p-4 rounded mb-4 text-sm border border-yellow-300">
+  🚨 Your plan has expired. You can add links as per your plan, but only <b>5 videos and images</b> will be visible. Upgrade to <span onClick={() => navigate('/pricing')} className="text-blue-600 underline cursor-pointer font-bold">Pro</span> to unlock all features!
+</div>
       )}
 
 
@@ -381,7 +388,7 @@ const UpdateProfile = () => {
             ) : (
               <p className="text-sm text-yellow-600 mt-2">
                 Reached max limit for {planName} plan.{' '}
-                <button onClick={() => navigate('/pricing')} type="button" className="text-blue-600 underline ml-1">
+                <button onClick={() => navigate('/pricing')} type="button" className="text-blue-600 underline ml-1 cursor-pointer">
                   Upgrade to Pro
                 </button>
               </p>
@@ -418,7 +425,7 @@ const UpdateProfile = () => {
           {(designImages.length + existingDesignImages.length) >= planLimits.shorts && (
             <p className="text-sm text-yellow-600 mt-2">
               Reached max limit for {planName} plan.{' '}
-              <button onClick={() => navigate('/pricing')} type="button" className="text-blue-600 underline ml-1">
+              <button onClick={() => navigate('/pricing')} type="button" className="text-blue-600 underline ml-1 cursor-pointer">
                 Upgrade to Pro
               </button>
             </p>
