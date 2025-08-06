@@ -9,24 +9,46 @@ const Navbar = () => {
     const location = useLocation(); // Get current location
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+
     const dropdownRef = useRef(null);
     const mobileMenuRef = useRef(null);
 
     const getInitial = (name) => name?.charAt(0)?.toUpperCase() || '?';
 
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-                setDropdownOpen(false);
-            }
-            if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target) && !e.target.closest('.mobile-menu-toggle')) {
-                setMobileMenuOpen(false);
-            }
-        };
+   useEffect(() => {
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setDropdownOpen(false);
+    }
 
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
+    if (
+      mobileMenuRef.current &&
+      !mobileMenuRef.current.contains(e.target) &&
+      !e.target.closest('.mobile-menu-toggle')
+    ) {
+      setMobileMenuOpen(false);
+    }
+  };
+
+  const handleScroll = () => {
+    if (window.scrollY > 0) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+  window.addEventListener('scroll', handleScroll);
+
+  // Cleanup both listeners on unmount
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+    window.removeEventListener('scroll', handleScroll);
+  };
+}, []);
+
 
     // Function to close both menus when a link is clicked
     const handleNavLinkClick = () => {
@@ -63,7 +85,9 @@ const Navbar = () => {
 
 
     return (
-        <nav className="px-4 sm:px-8 py-3 flex items-center justify-between relative bg-white z-50 sticky top-0 shadow-md">
+        <nav className={`px-4 sm:px-8 py-3 flex items-center justify-between relative bg-white z-50 sticky top-0 transition-shadow duration-300 ${
+    isScrolled ? 'shadow-md' : ''
+  }`}>
             {/* Mobile Menu Toggle (Hamburger) - Visible on small screens */}
             <div className="md:hidden flex items-center">
                 <button
