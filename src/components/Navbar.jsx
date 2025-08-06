@@ -63,7 +63,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className="px-4 sm:px-8 py-3 flex items-center justify-between relative bg-white z-50">
+        <nav className="px-4 sm:px-8 py-3 flex items-center justify-between relative bg-white z-50 sticky top-0 shadow-md">
             {/* Mobile Menu Toggle (Hamburger) - Visible on small screens */}
             <div className="md:hidden flex items-center">
                 <button
