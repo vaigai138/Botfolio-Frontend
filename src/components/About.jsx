@@ -81,16 +81,13 @@ const About = () => {
           </p>
           <a
             href="#showreel"
-            onClick={(e) => {
-              e.preventDefault();
-              const target = document.querySelector('#showreel');
-              if (target && window.lenis) {
-                window.lenis.scrollTo(target);
-              }
-            }}
+             onClick={(e) => {
+                        e.preventDefault();
+                        navigateToHomeSection('#showreel');
+                    }}
             className="inline-block px-6 py-3 text-white bg-[#F4A100] hover:opacity-90 transition duration-300"
           >
-            See Our Story
+            Quick Tutorial
           </a>
         </motion.article>
 
