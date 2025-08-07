@@ -26,6 +26,35 @@ const cardData = [
   },
 ];
 
+
+  const handleNavLinkClick = () => {
+        setDropdownOpen(false);
+        setMobileMenuOpen(false);
+    };
+
+    const navigateToHomeSection = (sectionId) => {
+        handleNavLinkClick();
+        if (location.pathname === '/') {
+            const target = document.querySelector(sectionId);
+            if (target && window.lenis) {
+                window.lenis.scrollTo(target);
+            } else if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        } else {
+            navigate('/');
+            setTimeout(() => {
+                const target = document.querySelector(sectionId);
+                if (target && window.lenis) {
+                    window.lenis.scrollTo(target);
+                } else if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+    };
+
+
 const About = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
