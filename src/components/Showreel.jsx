@@ -16,11 +16,9 @@ const Showreel = () => {
 
   const handleQuickGuideClick = () => {
     setShowVideo(true);
-
-    // Optional: Scroll to video after showing
     setTimeout(() => {
       ref.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100); // Give time for state to update
+    }, 100);
   };
 
   return (
@@ -57,7 +55,7 @@ const Showreel = () => {
 
         <motion.div
           style={{ y }}
-          className="relative group max-w-4xl mx-auto overflow-hidden border border-gray-200 transition duration-300 ease-in-out"
+          className="relative max-w-4xl mx-auto overflow-hidden border border-gray-200 transition duration-300 ease-in-out"
         >
           {!showVideo ? (
             <div
@@ -67,11 +65,11 @@ const Showreel = () => {
               <img
                 src={featuredShowreelItem.thumbnail}
                 alt={`${featuredShowreelItem.title} thumbnail`}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out hover:scale-105"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-50 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <svg
-                  className="w-16 h-16 sm:w-20 sm:h-20 text-white"
+                  className="w-16 h-16 sm:w-20 sm:h-20 text-white drop-shadow-lg"
                   fill="currentColor"
                   viewBox="0 0 24 24"
                 >
