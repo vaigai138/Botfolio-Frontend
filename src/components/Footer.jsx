@@ -21,12 +21,7 @@ const Footer = () => {
               </p>
 
               <div className="flex mt-5 space-x-4"> {/* Adjusted margin and spacing */}
-                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F4A100] transition-colors" aria-label="Instagram">
-                  <FaInstagram size={20} />
-                </a>
-                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="hover:text-[#F4A100] transition-colors" aria-label="YouTube">
-                  <FaYoutube size={20} />
-                </a>
+                
               </div>
             </div>
           </div>
