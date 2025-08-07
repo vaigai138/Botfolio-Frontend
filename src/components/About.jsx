@@ -2,6 +2,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { PiRocketLaunch, PiUsers, PiLightbulb, PiCheckCircle } from "react-icons/pi";
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const cardData = [
   {
@@ -27,35 +28,36 @@ const cardData = [
 ];
 
 
-  const handleNavLinkClick = () => {
-        setDropdownOpen(false);
-        setMobileMenuOpen(false);
-    };
-
-    const navigateToHomeSection = (sectionId) => {
-        handleNavLinkClick();
-        if (location.pathname === '/') {
-            const target = document.querySelector(sectionId);
-            if (target && window.lenis) {
-                window.lenis.scrollTo(target);
-            } else if (target) {
-                target.scrollIntoView({ behavior: 'smooth' });
-            }
-        } else {
-            navigate('/');
-            setTimeout(() => {
-                const target = document.querySelector(sectionId);
-                if (target && window.lenis) {
-                    window.lenis.scrollTo(target);
-                } else if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            }, 100);
-        }
-    };
+  
 
 
 const About = () => {
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const navigateToHomeSection = (sectionId) => {
+    if (location.pathname === '/') {
+      const target = document.querySelector(sectionId);
+      if (target && window.lenis) {
+        window.lenis.scrollTo(target);
+      } else if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        const target = document.querySelector(sectionId);
+        if (target && window.lenis) {
+          window.lenis.scrollTo(target);
+        } else if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300); // slightly increased timeout for better load
+    } }
+
+    
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
 
