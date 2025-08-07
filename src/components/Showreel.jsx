@@ -1,19 +1,36 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
-  thumbnail: 'https://your-domain.com/path-to-thumbnail.jpg', // Replace with your downloaded thumbnail
+  // We'll get the thumbnail dynamically
   description:
     'Streamline your freelance journey — from client onboarding to final delivery — all in one beautifully designed workspace.',
   link: '#featured-case-study',
+  vimeoId: '1107961955', // The ID from your Vimeo URL
 };
 
 const Showreel = () => {
   const ref = useRef(null);
+  const [thumbnailUrl, setThumbnailUrl] = useState('');
+  const [showVideo, setShowVideo] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], ['0px', '100px']);
+
+  useEffect(() => {
+    // Fetch thumbnail from Vimeo's oEmbed endpoint
+    const fetchThumbnail = async () => {
+      try {
+        const response = await fetch(`https://vimeo.com/api/oembed.json?url=https://vimeo.com/${featuredShowreelItem.vimeoId}`);
+        const data = await response.json();
+        setThumbnailUrl(data.thumbnail_url);
+      } catch (error) {
+        console.error('Failed to fetch Vimeo thumbnail:', error);
+      }
+    };
+    fetchThumbnail();
+  }, []);
 
   return (
     <section ref={ref} id='showreel' className="bg-white py-20 px-6 sm:px-10 lg:px-20 font-sans overflow-hidden">
@@ -52,25 +69,40 @@ const Showreel = () => {
           style={{ y }}
           className="relative group max-w-4xl mx-auto overflow-hidden border border-gray-200 transition duration-300 ease-in-out"
         >
-          <div className="relative w-full pt-[56.25%] bg-white">
-            <img
-              src={featuredShowreelItem.thumbnail}
-              alt={`${featuredShowreelItem.title} thumbnail`}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
-            />
-            {/* Overlay play button */}
-            <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-50 transition duration-300 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100">
-              <svg
-                className="w-16 h-16 sm:w-20 sm:h-20 text-white"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
+          {!showVideo ? (
+            <div
+              className="relative w-full pt-[56.25%] bg-white cursor-pointer"
+              onClick={() => setShowVideo(true)}
+            >
+              {thumbnailUrl && (
+                <img
+                  src={thumbnailUrl}
+                  alt={`${featuredShowreelItem.title} thumbnail`}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                />
+              )}
+              <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-50 transition duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100">
+                <svg
+                  className="w-16 h-16 sm:w-20 sm:h-20 text-white"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              </div>
             </div>
-          </div>
-          {/* Hidden video iframe for click interaction */}
-          {/* Add your Vimeo iframe logic here on click if needed */}
+          ) : (
+            <div className="relative w-full pt-[56.25%]">
+              <iframe
+                title={featuredShowreelItem.title}
+                src={`https://player.vimeo.com/video/${featuredShowreelItem.vimeoId}?autoplay=1&loop=1&background=1&mute=1`}
+                className="absolute inset-0 w-full h-full"
+                frameBorder="0"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>
