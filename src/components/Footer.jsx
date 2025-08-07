@@ -39,32 +39,10 @@ const Footer = () => {
                 <h3 className="text-base font-semibold mb-3 uppercase" style={{ color: '#FFFFFF' }}>Company</h3>
                 <ul className="space-y-2">
                   <li>
-                    <a href="#about"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const target = document.querySelector('#about');
-                        if (target && window.lenis) {
-                          window.lenis.scrollTo(target);
-                        }
-                      }}
-                      className="block text-sm hover:text-[#F4A100] transition-colors"
-                      style={{ color: '#9CA3AF' }}>
-                      About Us
-                    </a>
+                    <Link to="/#about">About</Link>
                   </li>
                   <li>
-                    <a href="#services"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        const target = document.querySelector('#services');
-                        if (target && window.lenis) {
-                          window.lenis.scrollTo(target);
-                        }
-                      }}
-                      className="block text-sm hover:text-[#F4A100] transition-colors"
-                      style={{ color: '#9CA3AF' }}>
-                      Services
-                    </a>
+                    <Link to="/#services">Services</Link>
                   </li>
                   <li>
                     <Link to="/contact" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>
