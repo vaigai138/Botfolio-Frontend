@@ -1,14 +1,10 @@
 import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Link } from 'react-router-dom';
 
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
-  // Placeholder for your custom thumbnail
-  thumbnail: 'https://placehold.jp/1920x1080.png', 
-  description:
-    'Streamline your freelance journey — from client onboarding to final delivery — all in one beautifully designed workspace.',
-  link: '#featured-case-study',
+  thumbnail: 'https://placehold.jp/1920x1080.png',
+  description: 'Don’t guess. Watch and get going in 2 minutes.',
   vimeoId: '1107961955',
 };
 
@@ -17,6 +13,15 @@ const Showreel = () => {
   const [showVideo, setShowVideo] = useState(false);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], ['0px', '100px']);
+
+  const handleQuickGuideClick = () => {
+    setShowVideo(true);
+
+    // Optional: Scroll to video after showing
+    setTimeout(() => {
+      ref.current?.scrollIntoView({ behavior: 'smooth' });
+    }, 100); // Give time for state to update
+  };
 
   return (
     <section ref={ref} id='showreel' className="bg-white py-20 px-6 sm:px-10 lg:px-20 font-sans overflow-hidden">
@@ -42,14 +47,13 @@ const Showreel = () => {
           {featuredShowreelItem.description}
         </motion.p>
 
-        <Link to="/pricing">
-          <motion.button
-            whileHover={{ scale: 1.00 }}
-            className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold shadow-md hover:shadow-sm cursor-pointer"
-          >
-            Find Your Subscription
-          </motion.button>
-        </Link>
+        <motion.button
+          whileHover={{ scale: 1.00 }}
+          className="mb-6 px-6 py-3 bg-[#F4A100] text-white font-semibold shadow-md hover:shadow-sm cursor-pointer"
+          onClick={handleQuickGuideClick}
+        >
+          Quick Guide
+        </motion.button>
 
         <motion.div
           style={{ y }}
@@ -79,7 +83,7 @@ const Showreel = () => {
             <div className="relative w-full pt-[56.25%]">
               <iframe
                 title={featuredShowreelItem.title}
-                src={`https://player.vimeo.com/video/${featuredShowreelItem.vimeoId}?dnt=1&byline=0&portrait=0&title=0&controls=1&autoplay=1`}
+                src={`https://player.vimeo.com/video/${featuredShowreelItem.vimeoId}?autoplay=1&muted=0&controls=1&title=0&byline=0&portrait=0`}
                 className="absolute inset-0 w-full h-full"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
