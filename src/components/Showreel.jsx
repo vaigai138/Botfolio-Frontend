@@ -4,11 +4,10 @@ import { Link } from 'react-router-dom';
 
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
-  // We'll get the thumbnail dynamically
   description:
     'Streamline your freelance journey — from client onboarding to final delivery — all in one beautifully designed workspace.',
   link: '#featured-case-study',
-  vimeoId: '1107961955', // The ID from your Vimeo URL
+  vimeoId: '1107961955',
 };
 
 const Showreel = () => {
@@ -95,7 +94,7 @@ const Showreel = () => {
             <div className="relative w-full pt-[56.25%]">
               <iframe
                 title={featuredShowreelItem.title}
-                src={`https://player.vimeo.com/video/${featuredShowreelItem.vimeoId}?autoplay=1&loop=1&background=1&mute=1`}
+                src={`https://player.vimeo.com/video/${featuredShowreelItem.vimeoId}?autoplay=1`}
                 className="absolute inset-0 w-full h-full"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
