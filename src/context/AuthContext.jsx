@@ -31,19 +31,20 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const loginUser = (userData, jwtToken) => {
-    const now = new Date().getTime();
-    const threeHours = 3 * 60 * 60 * 1000;
-    const expiry = now + threeHours;
+  const now = new Date().getTime();
+  const Days = 90 * 24 * 60 * 60 * 1000;
+  const expiry = now + Days;
 
-    setUser(userData);
-    setToken(jwtToken);
+  setUser(userData);
+  setToken(jwtToken);
 
-    localStorage.setItem('token', jwtToken);
-    localStorage.setItem('user', JSON.stringify(userData));
-    localStorage.setItem('expiry', expiry.toString());
+  localStorage.setItem('token', jwtToken);
+  localStorage.setItem('user', JSON.stringify(userData));
+  localStorage.setItem('expiry', expiry.toString());
 
-    navigate('/dashboard');
-  };
+  navigate('/dashboard');
+};
+
 
   const logoutUser = () => {
     setUser(null);
