@@ -110,7 +110,7 @@ const Navbar = () => {
                         <Link to="/pricing" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
                             Pricing
                         </Link>
-                        <Link to="/showcase" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+                        <Link to="/all-users" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
                             Find Freelancers
                         </Link>
                         {user.role === 'admin' && (
@@ -209,7 +209,7 @@ const Navbar = () => {
                             <Link to="/pricing" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 Pricing
                             </Link>
-                            <Link to="/showcase" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
+                            <Link to="/all-users" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 Find Freelancers
                             </Link>
                             {user.role === 'admin' && (
