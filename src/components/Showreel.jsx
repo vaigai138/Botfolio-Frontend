@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
   // Placeholder for your custom thumbnail
-  thumbnail: 'https://via.placeholder.com/1920x1080.png?text=Custom+Thumbnail', 
+  thumbnail: 'https://placehold.jp/1920x1080.png', 
   description:
     'Streamline your freelance journey — from client onboarding to final delivery — all in one beautifully designed workspace.',
   link: '#featured-case-study',
