@@ -21,6 +21,7 @@ import Contact from './pages/extrapages/Contact';
 import TermsOfService from './pages/extrapages/TermsOfService';
 import PrivacyPolicy from './pages/extrapages/PrivacyPolicy';
 import AdminDashboard from './pages/Admin/AdminDashboard';
+import ScrollToTop from './ScrollToTop';
 
 function App() {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -33,7 +34,7 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <Navbar />
-
+<ScrollToTop />
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
