@@ -1,12 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom'; // Import useLocation
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa';
 
 const Navbar = () => {
     const { user, logoutUser } = useAuth();
     const navigate = useNavigate();
-    const location = useLocation(); // Get current location
+    const location = useLocation();
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -16,51 +16,46 @@ const Navbar = () => {
 
     const getInitial = (name) => name?.charAt(0)?.toUpperCase() || '?';
 
-   useEffect(() => {
-  const handleClickOutside = (e) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-      setDropdownOpen(false);
-    }
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+                setDropdownOpen(false);
+            }
 
-    if (
-      mobileMenuRef.current &&
-      !mobileMenuRef.current.contains(e.target) &&
-      !e.target.closest('.mobile-menu-toggle')
-    ) {
-      setMobileMenuOpen(false);
-    }
-  };
+            if (
+                mobileMenuRef.current &&
+                !mobileMenuRef.current.contains(e.target) &&
+                !e.target.closest('.mobile-menu-toggle')
+            ) {
+                setMobileMenuOpen(false);
+            }
+        };
 
-  const handleScroll = () => {
-    if (window.scrollY > 0) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
+        };
 
-  document.addEventListener('mousedown', handleClickOutside);
-  window.addEventListener('scroll', handleScroll);
+        document.addEventListener('mousedown', handleClickOutside);
+        window.addEventListener('scroll', handleScroll);
 
-  // Cleanup both listeners on unmount
-  return () => {
-    document.removeEventListener('mousedown', handleClickOutside);
-    window.removeEventListener('scroll', handleScroll);
-  };
-}, []);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
 
-
-    // Function to close both menus when a link is clicked
     const handleNavLinkClick = () => {
         setDropdownOpen(false);
         setMobileMenuOpen(false);
     };
 
-    // New function to handle navigation to sections on the home page
     const navigateToHomeSection = (sectionId) => {
-        handleNavLinkClick(); // Close menus
+        handleNavLinkClick();
         if (location.pathname === '/') {
-            // If already on the homepage, just scroll
             const target = document.querySelector(sectionId);
             if (target && window.lenis) {
                 window.lenis.scrollTo(target);
@@ -68,10 +63,7 @@ const Navbar = () => {
                 target.scrollIntoView({ behavior: 'smooth' });
             }
         } else {
-            // If on another page, navigate to homepage first, then scroll
             navigate('/');
-            // Use a timeout or a state to ensure scroll happens after navigation
-            // A common pattern is to pass state and check in a useEffect on the home page
             setTimeout(() => {
                 const target = document.querySelector(sectionId);
                 if (target && window.lenis) {
@@ -79,16 +71,14 @@ const Navbar = () => {
                 } else if (target) {
                     target.scrollIntoView({ behavior: 'smooth' });
                 }
-            }, 100); // Small delay to allow navigation to complete
+            }, 100);
         }
     };
 
-
     return (
         <nav className={`px-4 sm:px-8 py-3 flex items-center justify-between relative bg-white z-50 sticky top-0 transition-shadow duration-300 ${
-    isScrolled ? 'shadow-md' : ''
-  }`}>
-            {/* Mobile Menu Toggle (Hamburger) - Visible on small screens */}
+            isScrolled ? 'shadow-md' : ''
+        }`}>
             <div className="md:hidden flex items-center">
                 <button
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -98,12 +88,11 @@ const Navbar = () => {
                 </button>
             </div>
 
-            {/* Desktop: Left menu items - Hidden on small screens */}
             <div className="hidden md:flex gap-6 items-center">
                 <a
-                    href="#about" // Keep href for accessibility/SEO, but onClick handles logic
+                    href="#about"
                     onClick={(e) => {
-                        e.preventDefault(); // Prevent default anchor jump
+                        e.preventDefault();
                         navigateToHomeSection('#about');
                     }}
                     className="text-gray-700 hover:text-[#F4A100] font-medium"
@@ -111,10 +100,10 @@ const Navbar = () => {
                     About Us
                 </a>
                 <a
-                    href="#services" // Keep href for accessibility/SEO, but onClick handles logic
+                    href="#services"
                     className="text-gray-700 hover:text-[#F4A100] font-medium"
                     onClick={(e) => {
-                        e.preventDefault(); // Prevent default anchor jump
+                        e.preventDefault();
                         navigateToHomeSection('#services');
                     }}
                 >
@@ -140,7 +129,6 @@ const Navbar = () => {
                 )}
             </div>
 
-            {/* Center: Logo - Always visible */}
             <div
                 className="text-2xl font-bold text-[#F4A100] pacifico-regular cursor-pointer absolute left-1/2 transform -translate-x-1/2"
                 onClick={() => { navigate('/'); handleNavLinkClick(); }}
@@ -148,8 +136,12 @@ const Navbar = () => {
                 Botfolio
             </div>
 
-            {/* Right: Profile or Auth - Visible on all screens, but dropdown now also on mobile */}
             <div className="flex items-center gap-4">
+                {user && (
+                    <Link to="/explore-freelancers" className="hidden md:block text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+                        Explore Freelancers
+                    </Link>
+                )}
                 {user ? (
                     <div className="relative" ref={dropdownRef}>
                         <div
@@ -188,7 +180,7 @@ const Navbar = () => {
                         )}
                     </div>
                 ) : (
-                    <div className="hidden md:flex items-center gap-4"> {/* Auth buttons still hidden on mobile */}
+                    <div className="hidden md:flex items-center gap-4">
                         <button
                             onClick={() => { navigate('/login'); handleNavLinkClick(); }}
                             className="bg-[#F4A100] text-white px-6 py-2 border border-[#F4A100] font-semibold cursor-pointer"
@@ -202,7 +194,6 @@ const Navbar = () => {
                 )}
             </div>
 
-            {/* Mobile Menu Overlay - Now a "small window" dropdown */}
             {mobileMenuOpen && (
                 <div className="md:hidden absolute top-full left-0 right-0 bg-gray-900 bg-opacity-90 z-40 flex flex-col space-y-4 py-4 px-6 shadow-lg" ref={mobileMenuRef}>
                     <button
@@ -212,7 +203,6 @@ const Navbar = () => {
                         <FaTimes size={30} />
                     </button>
 
-                    {/* Updated mobile links */}
                     <button
                         onClick={() => navigateToHomeSection('#about')}
                         className="text-white text-xl font-medium hover:text-[#F4A100] text-left"
@@ -242,11 +232,12 @@ const Navbar = () => {
                                     Admin
                                 </Link>
                             )}
-
+                            <Link to="/explore-freelancers" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
+                                Explore Freelancers
+                            </Link>
                             <Link to={`/${user.username}`} className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 View Profile
                             </Link>
-
                             <button
                                 className="text-white text-xl font-medium hover:text-[#F4A100] text-left"
                                 onClick={() => { handleNavLinkClick(); logoutUser(); }}
