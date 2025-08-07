@@ -39,10 +39,10 @@ const Footer = () => {
                 <h3 className="text-base font-semibold mb-3 uppercase" style={{ color: '#FFFFFF' }}>Company</h3>
                 <ul className="space-y-2">
                   <li>
-                    <Link to="/#about">About</Link>
+                    <Link to="/#about" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>About</Link>
                   </li>
                   <li>
-                    <Link to="/#services">Services</Link>
+                    <Link to="/#services" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>Services</Link>
                   </li>
                   <li>
                     <Link to="/contact" className="block text-sm hover:text-[#F4A100] transition-colors" style={{ color: '#9CA3AF' }}>
