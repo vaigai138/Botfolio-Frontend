@@ -131,10 +131,9 @@ export default function PricingPage() {
           }
         },
         prefill: {
-          name: loggedInUser?.name || "User Name",
-          email: loggedInUser?.email || "user@example.com",
-          contact: loggedInUser?.phone || "9999999999"
-        },
+    name: loggedInUser?.name || "User Name",
+    email: loggedInUser?.email || "user@example.com",
+  },
         theme: {
           color: "#F4A100"
         },
