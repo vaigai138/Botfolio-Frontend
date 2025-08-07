@@ -99,16 +99,6 @@ const Navbar = () => {
                 >
                     About Us
                 </a>
-                <a
-                    href="#services"
-                    className="text-gray-700 hover:text-[#F4A100] font-medium"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        navigateToHomeSection('#services');
-                    }}
-                >
-                    Services
-                </a>
                 {user && (
                     <>
                         <Link to="/dashboard" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
@@ -119,6 +109,9 @@ const Navbar = () => {
                         </Link>
                         <Link to="/pricing" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
                             Pricing
+                        </Link>
+                        <Link to="/showcase" className="text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
+                            Find Freelancers
                         </Link>
                         {user.role === 'admin' && (
                             <Link to="/admin/dashboard" className="text-red-600 font-bold hover:text-red-800" onClick={handleNavLinkClick}>
@@ -137,11 +130,6 @@ const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
-                {user && (
-                    <Link to="/explore-freelancers" className="hidden md:block text-gray-700 hover:text-[#F4A100] font-medium" onClick={handleNavLinkClick}>
-                        Explore Freelancers
-                    </Link>
-                )}
                 {user ? (
                     <div className="relative" ref={dropdownRef}>
                         <div
@@ -209,13 +197,7 @@ const Navbar = () => {
                     >
                         About Us
                     </button>
-                    <button
-                        onClick={() => navigateToHomeSection('#services')}
-                        className="text-white text-xl font-medium hover:text-[#F4A100] text-left"
-                    >
-                        Services
-                    </button>
-
+                    
                     {user && (
                         <>
                             <Link to="/dashboard" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
@@ -227,17 +209,19 @@ const Navbar = () => {
                             <Link to="/pricing" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 Pricing
                             </Link>
+                            <Link to="/showcase" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
+                                Find Freelancers
+                            </Link>
                             {user.role === 'admin' && (
                                 <Link to="/admin/dashboard" className="text-red-500 text-xl font-bold hover:text-yellow-300" onClick={handleNavLinkClick}>
                                     Admin
                                 </Link>
                             )}
-                            <Link to="/explore-freelancers" className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
-                                Explore Freelancers
-                            </Link>
+
                             <Link to={`/${user.username}`} className="text-white text-xl font-medium hover:text-[#F4A100]" onClick={handleNavLinkClick}>
                                 View Profile
                             </Link>
+
                             <button
                                 className="text-white text-xl font-medium hover:text-[#F4A100] text-left"
                                 onClick={() => { handleNavLinkClick(); logoutUser(); }}
