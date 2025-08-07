@@ -3,9 +3,9 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 
 const featuredShowreelItem = {
   title: 'Empowering Freelancers Seamlessly',
-  thumbnail: 'https://placehold.jp/1920x1080.png',
+  thumbnail: 'https://iili.io/Firbidu.png',
   description: 'Don’t guess. Watch and get going in 2 minutes.',
-  vimeoId: '1107961955',
+  vimeoId: '1108083630',
 };
 
 const Showreel = () => {
