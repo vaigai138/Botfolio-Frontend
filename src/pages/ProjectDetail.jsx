@@ -19,9 +19,11 @@ const ProjectDetail = () => {
     approvedDate: '',
     payment: '',
     received: false,
+    paymentMethod: 'Bank Transfer', // New field with a default value
+    paymentReceivedDate: '', // New field
   });
   const [clientName, setClientName] = useState('');
-  const [loadingPdf, setLoadingPdf] = useState(false); // New state for loading indicator
+  const [loadingPdf, setLoadingPdf] = useState(false);
 
   // Filter states
   const [filterProjectName, setFilterProjectName] = useState('');
@@ -53,6 +55,8 @@ const ProjectDetail = () => {
           givenDate: task.givenDate ? new Date(task.givenDate).toISOString().substring(0, 10) : '',
           submissionDate: task.submissionDate ? new Date(task.submissionDate).toISOString().substring(0, 10) : '',
           approvedDate: task.approvedDate ? new Date(task.approvedDate).toISOString().substring(0, 10) : '',
+          // Format new date field
+          paymentReceivedDate: task.paymentReceivedDate ? new Date(task.paymentReceivedDate).toISOString().substring(0, 10) : '',
         }));
         setTasks(fetchedTasks);
       } else {
@@ -102,6 +106,8 @@ const ProjectDetail = () => {
         approvedDate: '',
         payment: '',
         received: false,
+        paymentMethod: 'Bank Transfer',
+        paymentReceivedDate: '',
       });
     } catch (err) {
       alert('Failed to create task');
@@ -117,6 +123,8 @@ const ProjectDetail = () => {
       approvedDate: task.approvedDate,
       payment: task.payment,
       received: task.received,
+      paymentMethod: task.paymentMethod, // Set the new field for editing
+      paymentReceivedDate: task.paymentReceivedDate, // Set the new date field
     });
   };
 
@@ -136,6 +144,8 @@ const ProjectDetail = () => {
         approvedDate: '',
         payment: '',
         received: false,
+        paymentMethod: 'Bank Transfer',
+        paymentReceivedDate: '',
       });
     } catch (err) {
       alert('Failed to update task');
@@ -172,6 +182,8 @@ const ProjectDetail = () => {
       approvedDate: '',
       payment: '',
       received: false,
+      paymentMethod: 'Bank Transfer',
+      paymentReceivedDate: '',
     });
   };
 
@@ -216,7 +228,7 @@ const ProjectDetail = () => {
       const input = tableRef.current;
       
       // Changed scale from 4 to 2 to reduce PDF file size
-      const canvas = await html2canvas(input, { scale: 2 }); 
+      const canvas = await html2canvas(input, { scale: 2 });
       const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF('p', 'mm', 'a4');
       const imgWidth = 210;
@@ -262,7 +274,7 @@ const ProjectDetail = () => {
         <h3 className="text-lg font-semibold" style={{color: '#1F2937'}}>Filters:</h3>
         
         {/* New inner flex container for inputs to control alignment */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full"> 
+        <div className="flex flex-col sm:flex-row items-center gap-4 w-full">  
           {/* Project Name Filter */}
           <div className="relative flex items-center w-full sm:w-64"> {/* Adjusted width */}
             <FaSearch className="absolute left-3" style={{color: '#9CA3AF'}} />
@@ -307,6 +319,8 @@ const ProjectDetail = () => {
               <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Submission Date</th>
               <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Approved Date</th>
               <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Payment (₹)</th>
+              <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Payment Method</th> {/* New header */}
+              <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Payment Received Date</th> {/* New header */}
               <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Received?</th>
               <th className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}>Actions</th>
             </tr>
@@ -315,7 +329,7 @@ const ProjectDetail = () => {
             {/* Render existing tasks */}
             {filteredTasks.length === 0 && editingTaskId !== 'new' ? (
               <tr>
-                <td colSpan="8" className="px-3 py-2 sm:px-6 sm:py-4 text-center" style={{color: '#6B7280'}}>No tasks found.</td>
+                <td colSpan="10" className="px-3 py-2 sm:px-6 sm:py-4 text-center" style={{color: '#6B7280'}}>No tasks found.</td>
               </tr>
             ) : (
               filteredTasks.map((task, index) => (
@@ -396,6 +410,39 @@ const ProjectDetail = () => {
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
                     {editingTaskId === task._id ? (
+                      <select
+                        name="paymentMethod"
+                        value={form.paymentMethod}
+                        onChange={handleChange}
+                        className="w-full p-1 border rounded-sm focus:outline-none"
+                        style={{borderColor: '#D1D5DB'}}
+                      >
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Cash">Cash</option>
+                        <option value="UPI">UPI</option>
+                        <option value="PayPal">PayPal</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    ) : (
+                      task.paymentMethod || 'N/A'
+                    )}
+                  </td>
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
+                    {editingTaskId === task._id ? (
+                      <input
+                        type="date"
+                        name="paymentReceivedDate"
+                        value={form.paymentReceivedDate}
+                        onChange={handleChange}
+                        className="w-full p-1 border rounded-sm focus:outline-none"
+                        style={{borderColor: '#D1D5DB'}}
+                      />
+                    ) : (
+                      task.paymentReceivedDate ? new Date(task.paymentReceivedDate).toLocaleDateString() : 'N/A'
+                    )}
+                  </td>
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
+                    {editingTaskId === task._id ? (
                       <input
                         type="checkbox"
                         name="received"
@@ -420,7 +467,7 @@ const ProjectDetail = () => {
                           Save
                         </button>
                         <button
-                          onClick={() => { setEditingTaskId(null); setForm({ projectName: '', givenDate: '', submissionDate: '', approvedDate: '', payment: '', received: false }); }}
+                          onClick={() => { setEditingTaskId(null); setForm({ projectName: '', givenDate: '', submissionDate: '', approvedDate: '', payment: '', received: false, paymentMethod: 'Bank Transfer', paymentReceivedDate: '' }); }}
                           className="px-3 py-1 hover:bg-gray-300 transition text-sm"
                           style={{backgroundColor: '#E5E7EB', color: '#1F2937'}}
                           title="Cancel"
@@ -497,6 +544,31 @@ const ProjectDetail = () => {
                   />
                 </td>
                 <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
+                  <select
+                    name="paymentMethod"
+                    value={form.paymentMethod}
+                    onChange={handleChange}
+                    className="w-full p-1 border rounded-sm focus:outline-none"
+                    style={{borderColor: '#D1D5DB'}}
+                  >
+                    <option value="Bank Transfer">Bank Transfer</option>
+                    <option value="Cash">Cash</option>
+                    <option value="UPI">UPI</option>
+                    <option value="PayPal">PayPal</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </td>
+                <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
+                  <input
+                    type="date"
+                    name="paymentReceivedDate"
+                    value={form.paymentReceivedDate}
+                    onChange={handleChange}
+                    className="w-full p-1 border rounded-sm focus:outline-none"
+                    style={{borderColor: '#D1D5DB'}}
+                  />
+                </td>
+                <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-sm" style={{color: '#6B7280'}}>
                   <input
                     type="checkbox"
                     name="received"
@@ -517,7 +589,7 @@ const ProjectDetail = () => {
                       Save
                     </button>
                     <button
-                      onClick={() => { setEditingTaskId(null); setForm({ projectName: '', givenDate: '', submissionDate: '', approvedDate: '', payment: '', received: false }); }}
+                      onClick={() => { setEditingTaskId(null); setForm({ projectName: '', givenDate: '', submissionDate: '', approvedDate: '', payment: '', received: false, paymentMethod: 'Bank Transfer', paymentReceivedDate: '' }); }}
                       className="px-3 py-1 hover:bg-gray-300 transition text-sm"
                       style={{backgroundColor: '#E5E7EB', color: '#1F2937'}}
                       title="Cancel"
@@ -535,11 +607,11 @@ const ProjectDetail = () => {
               <td className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-bold uppercase tracking-wider" style={{color: '#374151'}}>
                 Task Count: {filteredTasks.length}
               </td>
-              <td colSpan="3" className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}></td>
+              <td colSpan="4" className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}></td>
               <td className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-bold uppercase tracking-wider" style={{color: '#374151'}}>
                 Total Payment: ₹{totalPayment.toLocaleString('en-IN')}
               </td>
-              <td colSpan="2" className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}></td>
+              <td colSpan="3" className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium uppercase tracking-wider" style={{color: '#6B7280'}}></td>
             </tr>
           </tfoot>
         </table>
@@ -605,3 +677,4 @@ const ProjectDetail = () => {
 };
 
 export default ProjectDetail;
+
