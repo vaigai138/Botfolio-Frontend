@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://botfolio-backend-production.up.railway.app/api',
+  baseURL: 'https://botfolio-cfefazfsadadh0gm.southeastasia-01.azurewebsites.net/api',
 });
 
 // Add token to each request
