@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'https://botfolio-backend-production.up.railway.app',
+  baseURL: 'https://botfolio-cfefazfsadadh0gm.southeastasia-01.azurewebsites.net',
 });
 
 // Optional: attach token automatically
