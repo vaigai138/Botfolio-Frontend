@@ -1,9 +1,20 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 //import LenisScrollWrapper from "../../components/LenisScrollWrapper";
 
 const PrivacyPolicy = () => {
   return (
    // <LenisScrollWrapper>
+   <>
+   
+   <Helmet>
+  <title>Botfolio | Privacy Policy</title>
+  <meta
+    name="description"
+    content="Read Botfolio’s privacy policy to understand how we collect, use, and protect your personal data."
+  />
+</Helmet>
+   
     <div className="min-h-screen bg-white text-black px-6 py-12">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-6 text-center">
@@ -81,6 +92,7 @@ const PrivacyPolicy = () => {
         </p>
       </div>
     </div>
+    </>
    // </LenisScrollWrapper>
   );
 };

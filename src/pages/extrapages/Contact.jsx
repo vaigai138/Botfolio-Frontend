@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import {
   User,
   Mail,
@@ -36,6 +37,15 @@ const Contact = () => {
 
   return (
    // <LenisScrollWrapper>
+   <>
+   <Helmet>
+  <title>Botfolio | Contact Us</title>
+  <meta
+    name="description"
+    content="Have questions or need support? Get in touch with the Botfolio team today."
+  />
+</Helmet>
+  
     <div className="min-h-screen bg-white text-black px-4 py-12">
       <div className="max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-4">
@@ -115,6 +125,7 @@ const Contact = () => {
         </form>
       </div>
     </div>
+     </>
   //  </LenisScrollWrapper>
   );
 };

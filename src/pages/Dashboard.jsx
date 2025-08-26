@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance'; // Assuming axiosInstance is configured for your API base URL
+import { Helmet } from "react-helmet-async";
 import {
   FaProjectDiagram,
   FaTasks,
@@ -118,7 +119,17 @@ const Dashboard = () => {
 
   return (
     //<LenisScrollWrapper>
+    <>
+    <Helmet>
+        <title>Botfolio | Dashboard for Freelance Creatives</title>
+        <meta
+          name="description"
+          content="Manage your freelance projects, invoices, and templates with Botfolio's all-in-one dashboard."
+        />
+      </Helmet>
+    
     <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
+      
       <div className="flex flex-col sm:flex-row items-center justify-between mb-8 pb-4 border-b" style={{ borderColor: '#E5E7EB' }}>
         <div className="flex items-center mb-4 sm:mb-0">
           {userProfile?.profileImage ? (
@@ -333,6 +344,7 @@ const Dashboard = () => {
         </div>
       </div>
     </div>
+    </>
    // </LenisScrollWrapper>
   );
 };

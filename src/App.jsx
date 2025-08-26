@@ -22,6 +22,7 @@ import TermsOfService from './pages/extrapages/TermsOfService';
 import PrivacyPolicy from './pages/extrapages/PrivacyPolicy';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import ScrollToTop from './ScrollToTop';
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -33,6 +34,7 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+    <HelmetProvider>
       <Navbar />
 <ScrollToTop />
       <Routes>
@@ -84,6 +86,7 @@ function App() {
         />
       </Routes>
       <Footer />
+      </HelmetProvider>
     </GoogleOAuthProvider>
   );
 }

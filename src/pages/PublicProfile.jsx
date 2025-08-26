@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance';
+import { Helmet } from "react-helmet-async";
 import {
     FaPhone,
     FaEnvelope,
@@ -120,6 +121,16 @@ const limitedImages = planExpired ? profile.graphicImages.slice(0, 5) : profile.
 
     return (
         //<LenisScrollWrapper>
+        <>
+        
+        <Helmet>
+  <title>Botfolio | Freelancer Profile</title>
+  <meta
+    name="description"
+    content="Showcase your freelance work with a public Botfolio profile. Share your projects and attract clients."
+  />
+</Helmet>
+        
         <div className="min-h-screen p-6 max-w-6xl mx-auto" >
             <h1 className="text-3xl font-bold mb-8 text-center">
                 Welcome to {profile.name}'s Portfolio
@@ -311,6 +322,7 @@ const limitedImages = planExpired ? profile.graphicImages.slice(0, 5) : profile.
             {/* Image Modal */}
 
         </div>
+        </>
       //  </LenisScrollWrapper>
     );
 };

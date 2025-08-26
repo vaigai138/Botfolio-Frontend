@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance';
 import { FaUserCircle, FaEdit, FaTrashAlt } from 'react-icons/fa'; // Import icons
+import { Helmet } from "react-helmet-async";
 //import LenisScrollWrapper from '../components/LenisScrollWrapper';
 
 const Projects = () => {
@@ -99,6 +100,16 @@ const Projects = () => {
 
   return (
   //  <LenisScrollWrapper>
+  <>
+  <Helmet>
+  <title>Botfolio | Manage Projects</title>
+  <meta
+    name="description"
+    content="Handle all your freelance projects in one place. Plan, track, and deliver with Botfolio’s project management tools."
+  />
+</Helmet>
+  
+ 
     <div className="p-4 sm:p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
       <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
         <h2 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-0" style={{ color: '#1F2937' }}>Your Projects</h2>
@@ -255,6 +266,7 @@ const Projects = () => {
         </div>
       )}
     </div>
+     </>
    // </LenisScrollWrapper>
   );
 };

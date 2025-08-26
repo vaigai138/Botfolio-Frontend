@@ -6,6 +6,7 @@ import API from "../utils/api";
 //import LenisScrollWrapper from "../components/LenisScrollWrapper";
 import { FaTimesCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom"; // Import useNavigate for redirection
+import { Helmet } from "react-helmet-async";
 
 // Access the Razorpay key from environment variables
 const RAZORPAY_KEY = import.meta.env.VITE_RAZORPAY_KEY_ID;
@@ -215,6 +216,17 @@ export default function PricingPage() {
 
   return (
    // <LenisScrollWrapper>
+   <>
+
+   <Helmet>
+  <title>Botfolio | Pricing Plans</title>
+  <meta
+    name="description"
+    content="Choose the right Botfolio plan for your freelance journey. Flexible pricing for individuals and teams."
+  />
+</Helmet>
+
+   
       <div className="min-h-screen bg-white text-black p-6 md:p-12 relative overflow-hidden">
         {/* 🎨 Background illustration */}
         <img
@@ -300,6 +312,7 @@ export default function PricingPage() {
         )}
         <MessageComponent message={message.text} type={message.type} onClose={() => setMessage({ text: null, type: null })} />
       </div>
+      </>
    // </LenisScrollWrapper>
   );
 }

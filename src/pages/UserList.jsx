@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from '../axiosInstance'; // Assuming axiosInstance is configured for your API base URL
 import { FaUserCircle, FaBriefcase } from 'react-icons/fa'; // Icons for profile and portfolio type
 //import LenisScrollWrapper from '../components/LenisScrollWrapper';
+import { Helmet } from "react-helmet-async";
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -52,6 +53,15 @@ const UserList = () => {
   return (
 
     //<LenisScrollWrapper>
+<>
+
+<Helmet>
+  <title>Botfolio | Freelance Portfolios</title>
+  <meta
+    name="description"
+    content="Browse creative freelance portfolios on Botfolio. Discover talent or showcase your own professional work."
+  />
+</Helmet>
 
     <div className="p-6" style={{ backgroundColor: '#ffffffff', minHeight: '100vh' }}>
 
@@ -98,6 +108,7 @@ const UserList = () => {
         </div>
       )}
     </div>
+    </>
     //</LenisScrollWrapper>
   );
 };

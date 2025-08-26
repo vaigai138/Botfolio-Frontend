@@ -1,9 +1,21 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 //import LenisScrollWrapper from "../../components/LenisScrollWrapper";
 
 const TermsOfService = () => {
   return (
    // <LenisScrollWrapper>
+   <>
+   
+   <Helmet>
+  <title>Botfolio | Terms of Service</title>
+  <meta
+    name="description"
+    content="Review Botfolio’s terms of service to know your rights, responsibilities, and usage guidelines."
+  />
+</Helmet>
+   
+   
     <div className="min-h-screen bg-white text-black px-6 py-12">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold mb-6 text-center">
@@ -86,6 +98,7 @@ const TermsOfService = () => {
         </p>
       </div>
     </div>
+    </>
 //    </LenisScrollWrapper>
   );
 };

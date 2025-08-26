@@ -7,6 +7,7 @@ import { GoogleLogin } from '@react-oauth/google';
 import axiosInstance from '../../axiosInstance';
 //import LenisScrollWrapper from '../../components/LenisScrollWrapper';
 import { FaCheck, FaTimesCircle } from 'react-icons/fa';
+import { Helmet } from "react-helmet-async";
 
 // A custom message component to replace browser alerts
 const MessageComponent = ({ message, type, onClose }) => {
@@ -114,6 +115,15 @@ const Signup = () => {
 
   return (
     <>
+
+
+    <Helmet>
+  <title>Botfolio | Login</title>
+  <meta
+    name="description"
+    content="Log in to your Botfolio account to manage projects, tasks, and invoices."
+  />
+</Helmet>
  
         <div className="min-h-screen flex items-center justify-center bg-white">
           <div className="w-full max-w-md p-6 shadow-xl border border-gray-100 rounded-sm">

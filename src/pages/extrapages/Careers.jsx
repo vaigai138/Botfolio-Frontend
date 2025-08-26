@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, Send } from "lucide-react";
+import { Helmet } from "react-helmet-async";
 //import LenisScrollWrapper from "../../components/LenisScrollWrapper";
 
 const jobOpenings = [
@@ -68,6 +69,15 @@ const Careers = () => {
 
   return (
    // <LenisScrollWrapper>
+   <>
+   <Helmet>
+  <title>Botfolio | Careers</title>
+  <meta
+    name="description"
+    content="Join the Botfolio team! Explore career opportunities and help us build tools for the future of freelancing."
+  />
+</Helmet>
+  
     <div className="min-h-screen bg-white text-black px-4 py-12">
       <div className="max-w-6xl mx-auto">
         <motion.h1
@@ -187,6 +197,8 @@ const Careers = () => {
         </div>
       </div>
     </div>
+     
+   </>
    // </LenisScrollWrapper>
   );
 };
